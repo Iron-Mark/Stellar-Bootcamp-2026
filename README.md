@@ -722,4 +722,3 @@ The Stellar UniTour is a university roadshow bringing Stellar and Soroban smart 
 ---
 
 *Questions? Ask your facilitator during the session or reach out via the Rise In platform.*
->>>>>>> 08aeb8a (add)
