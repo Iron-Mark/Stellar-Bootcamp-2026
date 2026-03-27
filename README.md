@@ -86,14 +86,20 @@ stellar keys fund my-key --network testnet
 **Build your contract:**
 
 ```bash
-stellar contract build
+cargo build --target wasm32-unknown-unknown --release
+```
+
+Confirm the compiled WASM file exists:
+
+```bash
+ls target/wasm32-unknown-unknown/release/*.wasm
 ```
 
 **Deploy to testnet:**
 
 ```bash
 stellar contract deploy \
-  --wasm target/wasm32-unknown-unknown/release/<your_contract>.wasm \
+  --wasm target/wasm32-unknown-unknown/release/soroban_community_treasury.wasm \
   --source my-key \
   --network testnet
 ```
