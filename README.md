@@ -6,7 +6,7 @@
 
 ---
 
-## 📋 Overview
+## Overview
 
 Welcome to the **Stellar Philippines UniTour**—a **university-wide campus bootcamp tour** that brings Soroban and Stellar to students across Philippine campuses. In this session, you’ll receive an assigned Soroban smart contract, complete it, deploy to Stellar **testnet**, then submit your work on Rise In for certification.
 
