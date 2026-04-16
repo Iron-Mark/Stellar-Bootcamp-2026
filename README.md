@@ -14,7 +14,7 @@ No prior Web3 experience needed—follow the steps below.
 
 ---
 
-## 🎯 Your Goal
+## Your Goal
 
 1. **Receive** your assigned Soroban smart contract
 2. **Complete** the contract code as instructed
@@ -24,7 +24,7 @@ No prior Web3 experience needed—follow the steps below.
 
 ---
 
-## ✅ Step-by-Step Guide
+## Step-by-Step Guide
 
 ### Step 1 - Set Up Your Environment
 
