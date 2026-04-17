@@ -217,6 +217,109 @@ Submit on the **Rise In program page** your facilitator shares for your campus s
 
 ---
 
+## Git Workflow Guide
+
+Use this Git workflow during the bootcamp, including `.gitignore` setup.
+
+### 1) Clone the Repository
+
+- **macOS (Terminal):**
+
+```bash
+git clone <facilitator-provided-repo-link>
+cd <contract-folder>
+```
+
+- **Windows (PowerShell):**
+
+```powershell
+git clone <facilitator-provided-repo-link>
+Set-Location <contract-folder>
+```
+
+### 2) Add a `.gitignore` File
+
+Create `.gitignore` to avoid committing build artifacts and secrets.
+
+Recommended `.gitignore` content:
+
+```gitignore
+/target/
+Cargo.lock
+.DS_Store
+.env
+*.log
+```
+
+- **macOS (Terminal):**
+
+```bash
+touch .gitignore
+nano .gitignore
+```
+
+- **Windows (PowerShell):**
+
+```powershell
+New-Item -Path .gitignore -ItemType File -Force
+notepad .gitignore
+```
+
+Track `.gitignore` in Git:
+
+```bash
+git add .gitignore
+git commit -m "Add gitignore for Soroban project"
+```
+
+### 3) Create Your Branch
+
+```bash
+git checkout -b <your-name>-contract-submission
+```
+
+or
+
+```powershell
+git checkout -b <your-name>-contract-submission
+```
+
+### 4) Stage and Commit Changes
+
+```bash
+git add .
+git commit -m "Complete assigned Soroban contract"
+```
+
+or
+
+```powershell
+git add .
+git commit -m "Complete assigned Soroban contract"
+```
+
+### 5) Push to GitHub
+
+```bash
+git push -u origin <your-name>-contract-submission
+```
+
+or
+
+```powershell
+git push -u origin <your-name>-contract-submission
+```
+
+### 6) Useful Git Checks
+
+```bash
+git status
+git log --oneline -n 5
+git branch -vv
+```
+
+---
+
 ## 📁 Required Repo Structure
 
 ```text
