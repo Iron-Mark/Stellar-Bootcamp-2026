@@ -220,6 +220,7 @@ Submit on the **Rise In program page** your facilitator shares for your campus s
 ## Git Workflow Guide
 
 Use this Git workflow during the bootcamp, including `.gitignore` setup.
+Submit using your **own GitHub repository** (not this bootcamp/facilitator repository).
 
 ### 1) Clone the Repository
 
@@ -237,7 +238,29 @@ git clone <facilitator-provided-repo-link>
 Set-Location <contract-folder>
 ```
 
-### 2) Add a `.gitignore` File
+### 2) Connect the Project to Your Own GitHub Repository
+
+Create a new empty repository in your GitHub account first, then update `origin` to your own repo URL:
+
+- **macOS (Terminal):**
+
+```bash
+git remote -v
+git remote set-url origin <your-github-repo-url>
+git remote -v
+```
+
+- **Windows (PowerShell):**
+
+```powershell
+git remote -v
+git remote set-url origin <your-github-repo-url>
+git remote -v
+```
+
+Make sure `origin` points to your GitHub username/repo before pushing.
+
+### 3) Add a `.gitignore` File
 
 Create `.gitignore` to avoid committing build artifacts and secrets.
 
@@ -272,7 +295,7 @@ git add .gitignore
 git commit -m "Add gitignore for Soroban project"
 ```
 
-### 3) Create Your Branch
+### 4) Create Your Branch
 
 ```bash
 git checkout -b <your-name>-contract-submission
@@ -284,7 +307,7 @@ or
 git checkout -b <your-name>-contract-submission
 ```
 
-### 4) Stage and Commit Changes
+### 5) Stage and Commit Changes
 
 ```bash
 git add .
@@ -298,7 +321,7 @@ git add .
 git commit -m "Complete assigned Soroban contract"
 ```
 
-### 5) Push to GitHub
+### 6) Push to GitHub (Your Own Repo)
 
 ```bash
 git push -u origin <your-name>-contract-submission
@@ -310,7 +333,7 @@ or
 git push -u origin <your-name>-contract-submission
 ```
 
-### 6) Useful Git Checks
+### 7) Useful Git Checks
 
 ```bash
 git status
