@@ -360,7 +360,7 @@ For **Prize Pool Joiner Submission**:
 <project-root>/
 ├── contract/
 ├── frontend/
-└── backend/
+└── backend/ (this is optional)
 ```
 
 ---
