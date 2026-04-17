@@ -44,7 +44,8 @@ rustup target add wasm32-unknown-unknown
 - [Stellar CLI](https://developers.stellar.org/docs/tools/stellar-cli):
 
 ```bash
-cargo install --locked stellar-cli@25.2.0
+cargo install --locked stellar-cli 
+
 ```
 
 - [Freighter Wallet](https://freighter.app) (browser extension), set to **Testnet**
