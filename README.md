@@ -109,15 +109,21 @@ Invoke-WebRequest "https://friendbot.stellar.org?addr=<YOUR_FREIGHTER_TESTNET_AD
 
 **Build your contract:**
 
+- **macOS (Terminal):**
+
 ```bash
 cargo build --target wasm32-unknown-unknown --release
-```
-
-Confirm the compiled WASM file exists:
-
-```bash
 ls target/wasm32-unknown-unknown/release/*.wasm
 ```
+
+- **Windows (PowerShell):**
+
+```powershell
+cargo build --target wasm32-unknown-unknown --release
+Get-ChildItem target\wasm32-unknown-unknown\release\*.wasm
+```
+
+If you do not see a `.wasm` file, confirm your contract crate name and retry the build command.
 
 **Deploy to testnet:**
 
