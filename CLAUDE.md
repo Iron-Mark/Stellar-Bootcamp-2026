@@ -9,7 +9,7 @@ This is the **Stellar Philippines UniTour** bootcamp repository — a participan
 1. **`README.md`** — 5-step walkthrough: install toolchain → complete assigned Soroban contract → `cargo test` (≥3 tests) → deploy to Stellar **testnet** → submit on Rise In.
 2. **`setup/[ENG] Pre-Workshop Setup Guide.pdf`** — participant install guide (Rust, Stellar CLI, WASM target, Freighter).
 3. **`setup/STELLAR_FREIGHTER_INTEGRATION_GUIDE.md`** — generalized Next.js + Soroban + Freighter integration recipe.
-4. **`frontend/`** — Next.js 15 (App Router) + React 19 dApp using `@stellar/stellar-sdk` and `@stellar/freighter-api`. Composition: `app/` (layout, page, `/proof/[hash]`), `components/` (`actions/`, `layout/`, `milestones/`, `proof/`, `ui/`, `wallet/`), `hooks/`, `lib/` (config, contract-client, errors, with-timeout), `styles/globals.css` (design tokens).
+4. **`frontend/`** — Next.js 15 (App Router) + React 19 dApp using `@stellar/stellar-sdk` and `@stellar/freighter-api`. Composition: `app/` (layout, page, `/about`, `/proof`, `/proof/[hash]`, `/proof/[hash]/embed`), `components/` (`actions/`, `activity/`, `layout/`, `milestones/`, `proof/`, `ui/`, `wallet/`), `hooks/`, `lib/` (config, contract-client, contract-read-server, demo-data, errors, events, format, freighter, issuer-registry, types, validators, with-timeout), `styles/globals.css` (design tokens). Security: HTTP security headers + CSP in `next.config.ts`; dynamic proof routes cached with `revalidate=60` and guarded with a hex-format check before any RPC call.
 5. **`setup/TODO.md`** — local setup progress tracker (A–E sections: Environment, Manual pre-workshop, Contract deploy, Rise In, Phase 2 fullstack).
 6. **`setup/FULLSTACK_PROMPT_TEMPLATE.md`** — v3 prompt template for generating a Stellar dApp idea + Soroban contract files + frontend design brief. Used in Phase 2 after the Contract ID is deployed. Refined against the `stellar-dev`, `ui-ux-pro-max`, and `superpowers/writing-skills` plugins.
 
@@ -58,6 +58,7 @@ The integration follows the flow documented in `setup/STELLAR_FREIGHTER_INTEGRAT
 - **Wallet layer** (`lib/` + `hooks/`) wraps `@stellar/freighter-api` — connection state, public key, network check, sign.
 - **Contract client** (`lib/`) builds transactions with `@stellar/stellar-sdk`: read-only calls via `simulateTransaction` using the read address; writes sign via Freighter and submit via Soroban RPC. Handles ScVal arg serialization, return-value decoding, and error normalization.
 - **UI components** are marked `"use client"` because Freighter is a browser-only API.
+- **Security** (`next.config.ts`): CSP, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, and HSTS on every route. `/proof/[hash]` pages validate the hash format before any RPC call and use `revalidate=60` for CDN caching. `robots.ts` blocks crawlers from spidering dynamic proof routes.
 
 When editing the frontend, treat the integration guide as the canonical spec.
 

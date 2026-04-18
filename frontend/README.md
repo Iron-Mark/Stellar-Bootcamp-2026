@@ -30,7 +30,10 @@ Open http://localhost:3000. Install [Freighter](https://www.freighter.app/) and 
 | Path | Description |
 |------|-------------|
 | `/` | Dashboard — Next Action card + Milestone rail + Register / Verify / Pay forms + Proof Block preview |
-| `/proof/[hash]` | Public proof page — shareable, no wallet required |
+| `/about` | About page |
+| `/proof` | Proof lookup form — enter any cert hash to check status |
+| `/proof/[hash]` | Public proof page — shareable, no wallet required. Cached 60 s at CDN; invalid hashes return instant 404. |
+| `/proof/[hash]/embed` | Compact iframe embed — for portfolios, Notion, blogs. `frame-ancestors *` CSP allows all hosts. |
 
 ## Design system
 
@@ -40,24 +43,30 @@ Tokens and global styles live in `src/styles/globals.css`. The palette is dark-f
 
 ```
 frontend/
+├── next.config.ts                HTTP security headers + CSP for all routes
 ├── src/
-│   ├── app/                      App Router (layout, page, proof/[hash]/page)
+│   ├── app/                      App Router (layout, page, /about, /proof, /proof/[hash], /proof/[hash]/embed)
 │   ├── components/
 │   │   ├── actions/              RegisterForm, VerifyForm, PayForm, NextActionCard
-│   │   ├── layout/               AppShell, RpcStatusPill
+│   │   ├── activity/             RecentActivity (live on-chain events)
+│   │   ├── layout/               AppShell, RpcStatusPill, SiteNav, SiteFooter
 │   │   ├── milestones/           MilestoneRail
-│   │   ├── proof/                ProofCard, ProofBlockPreview, ShareButtons
+│   │   ├── proof/                ProofCard, ProofBlockPreview, ShareButtons, ProofQr
 │   │   ├── ui/                   Button, Input, Badge, CopyButton, Skeleton, Toast
 │   │   └── wallet/               WalletConnectButton
 │   ├── hooks/
-│   │   └── use-freighter-wallet.ts
+│   │   └── use-freighter-wallet.tsx
 │   ├── lib/
 │   │   ├── config.ts             Env + network config
-│   │   ├── contract-client.ts    Soroban build/simulate/sign/submit
-│   │   ├── errors.ts             humanizeError — friendly error copy
+│   │   ├── contract-client.ts    Soroban build/simulate/sign/submit (client-side)
+│   │   ├── contract-read-server.ts  Server-side read-only simulation
+│   │   ├── demo-data.ts          Fallback sample hashes for E2E / demo mode
+│   │   ├── errors.ts             humanizeError — friendly error copy, no raw XDR leakage
+│   │   ├── events.ts             RPC event polling + decoding
 │   │   ├── format.ts             Amount + address formatting
-│   │   ├── freighter.ts          Freighter wrapper
-│   │   ├── types.ts              Shared types
+│   │   ├── freighter.ts          Freighter wrapper (E2E mock included)
+│   │   ├── issuer-registry.ts    Known issuer label lookup
+│   │   ├── types.ts              Shared types (WalletStatus, TxState, etc.)
 │   │   ├── validators.ts         Address + input validation
 │   │   └── with-timeout.ts       Promise timeout helper
 │   └── styles/

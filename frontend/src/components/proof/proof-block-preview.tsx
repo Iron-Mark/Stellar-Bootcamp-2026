@@ -36,6 +36,30 @@ export function ProofBlockPreview({ hash }: ProofBlockPreviewProps) {
         </Link>
       ) : (
         <span className={styles.disabledBtn} aria-disabled="true">
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 13 13"
+            fill="none"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <rect
+              x="2"
+              y="5.5"
+              width="9"
+              height="7"
+              rx="1.5"
+              stroke="currentColor"
+              strokeWidth="1.25"
+            />
+            <path
+              d="M4 5.5V3.5a2.5 2.5 0 0 1 5 0v2"
+              stroke="currentColor"
+              strokeWidth="1.25"
+              strokeLinecap="round"
+            />
+          </svg>
           Proof Block unlocks after registration
         </span>
       )}

@@ -1,6 +1,9 @@
+// frontend/src/components/actions/next-action-card.tsx
 "use client";
 
 import styles from "./next-action-card.module.css";
+import { useLocale } from "@/hooks/use-locale";
+import { i18n } from "@/lib/i18n";
 
 export type Role = "issuer" | "employer";
 
@@ -65,42 +68,24 @@ function getContent(
   role: Role,
   milestones: Milestones,
   walletConnected: boolean,
+  t: typeof i18n.en.app,
 ): { title: string; subtitle: string } {
   if (!walletConnected) {
-    return {
-      title: "Connect your wallet to start",
-      subtitle: "You'll sign transactions with Freighter.",
-    };
+    return { title: t.connectTitle, subtitle: t.connectSubtitle };
   }
   if (role === "issuer") {
     if (!milestones.registered) {
-      return {
-        title: "Register a certificate",
-        subtitle:
-          "Upload the PDF or paste a 64-char hex hash. You'll sign as the issuer.",
-      };
+      return { title: t.issuerRegisterTitle, subtitle: t.issuerRegisterSubtitle };
     }
-    return {
-      title: "Certificate registered",
-      subtitle: "Switch to Employer role to verify and pay.",
-    };
+    return { title: t.issuerDoneTitle, subtitle: t.issuerDoneSubtitle };
   }
   if (!milestones.verified) {
-    return {
-      title: "Verify the certificate",
-      subtitle: "Look it up first, then mark it verified on-chain.",
-    };
+    return { title: t.verifyTitle, subtitle: t.verifySubtitle };
   }
   if (!milestones.paid) {
-    return {
-      title: "Pay the verified student",
-      subtitle: "Send the payment amount linked to this certificate.",
-    };
+    return { title: t.payTitle, subtitle: t.paySubtitle };
   }
-  return {
-    title: "All done",
-    subtitle: "The proof block is ready to share.",
-  };
+  return { title: t.doneTitle, subtitle: t.doneSubtitle };
 }
 
 export function NextActionCard({
@@ -109,8 +94,10 @@ export function NextActionCard({
   milestones,
   walletConnected,
 }: NextActionCardProps) {
-  const { title, subtitle } = getContent(role, milestones, walletConnected);
-  const indicatorPosition = role === "issuer" ? "0%" : "50%";
+  const locale = useLocale();
+  const t = i18n[locale].app;
+  const { title, subtitle } = getContent(role, milestones, walletConnected, t);
+  const indicatorPosition = role === "issuer" ? "0%" : "100%";
 
   return (
     <div className={styles.card}>
@@ -135,8 +122,8 @@ export function NextActionCard({
           >
             <IssuerIcon />
             <span className={styles.segLabel}>
-              <span className={styles.segLabelTitle}>Issuer</span>
-              <span className={styles.segLabelDesc}>Register certs</span>
+              <span className={styles.segLabelTitle}>{t.issuerLabel}</span>
+              <span className={styles.segLabelDesc}>{t.issuerDesc}</span>
             </span>
           </button>
           <button
@@ -148,8 +135,8 @@ export function NextActionCard({
           >
             <EmployerIcon />
             <span className={styles.segLabel}>
-              <span className={styles.segLabelTitle}>Employer</span>
-              <span className={styles.segLabelDesc}>Verify &amp; pay</span>
+              <span className={styles.segLabelTitle}>{t.employerLabel}</span>
+              <span className={styles.segLabelDesc}>{t.employerDesc}</span>
             </span>
           </button>
         </div>

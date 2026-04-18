@@ -1,20 +1,29 @@
 // Compact, iframe-friendly Proof Block for embedding in portfolios, Notion, blogs.
 // Usage: <iframe src="https://.../proof/<hash>/embed" width="420" height="220" />
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getCertificate, CertificateRecord } from "@/lib/contract-client";
+import {
+  getCertificateServer,
+  CertificateRecord,
+} from "@/lib/contract-read-server";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
+
+const HASH_RE = /^[0-9a-f]{64}$/i;
 
 interface PageProps {
   params: Promise<{ hash: string }>;
 }
 
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
   const { hash } = await params;
-  const short = hash.length > 16 ? `${hash.slice(0, 8)}…${hash.slice(-8)}` : hash;
+  const short =
+    hash.length > 16 ? `${hash.slice(0, 8)}…${hash.slice(-8)}` : hash;
   return {
     title: `Proof ${short} — embed`,
     robots: { index: false, follow: false },
@@ -24,16 +33,23 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function EmbedProof({ params }: PageProps) {
   const { hash } = await params;
 
+  if (!HASH_RE.test(hash)) notFound();
+
   let cert: CertificateRecord | null = null;
   try {
-    cert = await getCertificate(hash);
+    cert = await getCertificateServer(hash);
   } catch {
     cert = null;
   }
 
-  const status = cert?.verified ? "Verified" : cert ? "Registered" : "Not found";
+  const status = cert?.verified
+    ? "Verified"
+    : cert
+      ? "Registered"
+      : "Not found";
   const statusColor = cert?.verified ? "#10B981" : cert ? "#F59E0B" : "#64748B";
-  const short = hash.length > 20 ? `${hash.slice(0, 10)}…${hash.slice(-10)}` : hash;
+  const short =
+    hash.length > 20 ? `${hash.slice(0, 10)}…${hash.slice(-10)}` : hash;
   const proofUrl = `/proof/${hash}`;
   const explorerUrl = appConfig.contractId
     ? `${appConfig.explorerUrl}/contract/${appConfig.contractId}`
@@ -47,7 +63,8 @@ export default async function EmbedProof({ params }: PageProps) {
         padding: "20px",
         fontFamily:
           "'IBM Plex Sans', system-ui, -apple-system, Segoe UI, sans-serif",
-        background: "linear-gradient(135deg, #0F172A 0%, #1E293B 55%, #312E81 100%)",
+        background:
+          "linear-gradient(135deg, #0F172A 0%, #1E293B 55%, #312E81 100%)",
         color: "#F8FAFC",
         borderRadius: "16px",
         border: "1px solid rgba(148, 163, 184, 0.2)",
@@ -74,7 +91,13 @@ export default async function EmbedProof({ params }: PageProps) {
         >
           ✓
         </div>
-        <span style={{ fontWeight: 700, letterSpacing: "-0.01em", fontSize: "14px" }}>
+        <span
+          style={{
+            fontWeight: 700,
+            letterSpacing: "-0.01em",
+            fontSize: "14px",
+          }}
+        >
           STELLAROID EARN
         </span>
         <span
