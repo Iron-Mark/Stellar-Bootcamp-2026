@@ -19,6 +19,48 @@ export interface NextActionCardProps {
   walletConnected: boolean;
 }
 
+function IssuerIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <path d="M14 2v6h6" />
+      <circle cx="12" cy="15" r="2" />
+      <path d="M12 13v-1M9 15h-1M15 15h1" opacity="0.4" />
+    </svg>
+  );
+}
+
+function EmployerIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <rect x="2" y="7" width="20" height="14" rx="2" />
+      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      <path d="M2 13h20" opacity="0.5" />
+      <path d="M11 13h2" />
+    </svg>
+  );
+}
+
 function getContent(
   role: Role,
   milestones: Milestones,
@@ -43,7 +85,6 @@ function getContent(
       subtitle: "Switch to Employer role to verify and pay.",
     };
   }
-  // employer
   if (!milestones.verified) {
     return {
       title: "Verify the certificate",
@@ -69,34 +110,47 @@ export function NextActionCard({
   walletConnected,
 }: NextActionCardProps) {
   const { title, subtitle } = getContent(role, milestones, walletConnected);
+  const indicatorPosition = role === "issuer" ? "0%" : "50%";
 
   return (
     <div className={styles.card}>
       <div className={styles.topRow}>
-        <div className={styles.segmented} role="group" aria-label="Select role">
+        <div
+          className={styles.segmented}
+          role="radiogroup"
+          aria-label="Select persona"
+          data-active={role}
+        >
+          <span
+            className={styles.indicator}
+            style={{ transform: `translateX(${indicatorPosition})` }}
+            aria-hidden="true"
+          />
           <button
             type="button"
-            className={
-              role === "issuer"
-                ? `${styles.segBtn} ${styles.segBtnActive}`
-                : styles.segBtn
-            }
+            className={`${styles.segBtn} ${role === "issuer" ? styles.segBtnActive : ""}`}
             onClick={() => setRole("issuer")}
-            aria-pressed={role === "issuer"}
+            role="radio"
+            aria-checked={role === "issuer"}
           >
-            Issuer
+            <IssuerIcon />
+            <span className={styles.segLabel}>
+              <span className={styles.segLabelTitle}>Issuer</span>
+              <span className={styles.segLabelDesc}>Register certs</span>
+            </span>
           </button>
           <button
             type="button"
-            className={
-              role === "employer"
-                ? `${styles.segBtn} ${styles.segBtnActive}`
-                : styles.segBtn
-            }
+            className={`${styles.segBtn} ${role === "employer" ? styles.segBtnActive : ""}`}
             onClick={() => setRole("employer")}
-            aria-pressed={role === "employer"}
+            role="radio"
+            aria-checked={role === "employer"}
           >
-            Employer
+            <EmployerIcon />
+            <span className={styles.segLabel}>
+              <span className={styles.segLabelTitle}>Employer</span>
+              <span className={styles.segLabelDesc}>Verify &amp; pay</span>
+            </span>
           </button>
         </div>
       </div>
