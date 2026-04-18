@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { appConfig } from "@/lib/config";
-import { LocaleToggle } from "./locale-toggle";
+import { FooterTagline } from "@/components/layout/footer-tagline";
+import { LocaleToggle } from "@/components/layout/locale-toggle";
 import styles from "./site-footer.module.css";
 
 export function SiteFooter() {
@@ -16,10 +17,7 @@ export function SiteFooter() {
             <img src="/logo.svg" alt="" width={24} height={24} />
             <span>Stellaroid Earn</span>
           </div>
-          <p>
-            On-chain credential registry on Stellar testnet. Built for the Stellar
-            Philippines UniTour bootcamp.
-          </p>
+          <FooterTagline />
         </div>
         <div className={styles.col}>
           <h4>Site</h4>

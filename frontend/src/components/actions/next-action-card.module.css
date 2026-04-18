@@ -2,80 +2,71 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  padding: 24px;
+  overflow: hidden;
 }
 
+/* ── Tab bar ──────────────────────────────────────────── */
 .topRow {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
+  border-bottom: 1px solid var(--color-border);
 }
 
-/* Segmented control — sliding indicator animates transform only */
 .segmented {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: min(100%, 420px);
-  background: var(--color-surface-2);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  padding: 4px;
-  isolation: isolate;
 }
 
+/* Sliding underline — animates transform only */
 .indicator {
   position: absolute;
-  top: 4px;
-  bottom: 4px;
-  left: 4px;
-  width: calc(50% - 4px);
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  height: 2px;
   background: var(--color-primary);
-  border-radius: calc(var(--radius-md) - 4px);
-  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.25);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.45);
+  border-radius: 2px 2px 0 0;
   transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
-  z-index: 0;
+  z-index: 1;
 }
 
 .segBtn {
   position: relative;
-  z-index: 1;
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 10px;
-  padding: 10px 14px;
-  min-height: 48px;
+  padding: 14px 20px;
+  min-height: 52px;
   background: transparent;
   border: none;
-  border-radius: calc(var(--radius-md) - 4px);
   color: var(--color-text-muted);
   cursor: pointer;
   font-family: inherit;
   text-align: left;
-  transition: color 180ms ease;
+  transition: color 160ms ease, background 160ms ease;
 }
 
 .segBtn:hover:not(.segBtnActive) {
   color: var(--color-text);
+  background: rgba(248, 250, 252, 0.03);
 }
 
 .segBtn:focus-visible {
   outline: 2px solid var(--color-primary);
-  outline-offset: 3px;
+  outline-offset: -2px;
 }
 
 .segBtnActive {
-  color: var(--color-on-primary);
+  color: var(--color-primary);
 }
 
+.segBtn svg { opacity: 0.65; flex-shrink: 0; transition: opacity 160ms ease; }
 .segBtnActive svg { opacity: 1; }
-.segBtn svg { opacity: 0.75; flex-shrink: 0; }
 
 .segLabel {
   display: flex;
   flex-direction: column;
-  line-height: 1.1;
+  line-height: 1.15;
   min-width: 0;
 }
 
@@ -88,16 +79,16 @@
 .segLabelDesc {
   font-size: 11px;
   font-weight: 400;
-  letter-spacing: 0.02em;
-  opacity: 0.78;
+  opacity: 0.72;
   margin-top: 2px;
 }
 
-/* Body */
+/* ── Body ─────────────────────────────────────────────── */
 .body {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  padding: 20px 24px 24px;
 }
 
 .title {
@@ -115,15 +106,16 @@
   line-height: 1.5;
 }
 
-/* Motion preference */
+/* ── Motion preference ────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .indicator { transition: none; }
   .segBtn { transition: none; }
 }
 
-/* Narrow screens — hide descriptor caption to save width */
+/* ── Narrow screens ───────────────────────────────────── */
 @media (max-width: 420px) {
   .segLabelDesc { display: none; }
-  .segBtn { min-height: 44px; gap: 8px; padding: 8px 10px; }
+  .segBtn { min-height: 48px; gap: 8px; padding: 12px 14px; }
   .segLabelTitle { font-size: 13px; }
+  .body { padding: 16px 16px 20px; }
 }

@@ -69,6 +69,7 @@ export function LocaleToggle() {
     } catch {
       // ignore
     }
+    document.cookie = `${LOCALE_STORAGE_KEY}=${next}; path=/; max-age=31536000; SameSite=Lax`;
     window.dispatchEvent(new CustomEvent<Locale>(LOCALE_CHANGE_EVENT, { detail: next }));
   }
 

@@ -58,6 +58,40 @@
   margin: 0;
 }
 
+.statusSummary {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  padding: var(--space-3) var(--space-4);
+}
+
+.statusTitle {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.statusBody {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.statusCta {
+  display: inline-flex;
+  margin-top: var(--space-2);
+  color: var(--color-accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.statusCta:hover {
+  text-decoration: underline;
+}
+
 /* ── Meta rows (contract / hash) ────────────────────── */
 .metaRow {
   display: flex;
@@ -67,6 +101,7 @@
 }
 
 .metaLabel {
+  font-family: var(--font-pixel);
   font-size: 0.75rem;
   font-weight: 500;
   color: var(--color-text-muted);
@@ -164,6 +199,7 @@
 }
 
 .rubricTitle {
+  font-family: var(--font-pixel);
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--color-text-muted);
@@ -202,6 +238,7 @@
 }
 
 .shareTitle {
+  font-family: var(--font-pixel);
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--color-text-muted);
@@ -273,6 +310,7 @@
   .shell { padding: var(--space-3); }
   .card { padding: var(--space-4); gap: var(--space-4); border-radius: var(--radius-md); }
   .pitch { font-size: 1.0625rem; }
+  .statusSummary { padding: var(--space-3); }
   .metaRow, .certRow { gap: 6px; }
   .metaCode { font-size: 0.75rem; word-break: break-all; }
   .metaLink { white-space: normal; }
@@ -283,9 +321,65 @@
 }
 
 @media print {
+  @page {
+    size: A4 portrait;
+    margin: 12mm;
+  }
+
+  .shell {
+    max-width: none;
+    padding: 0;
+  }
+
   .card {
     background: white;
     color: black;
     border: 1px solid #000;
+    gap: 16px;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .card::after {
+    display: none;
+  }
+
+  .metaLink,
+  .shareSection,
+  .notFoundCta {
+    display: none !important;
+  }
+
+  .card button {
+    display: none !important;
+  }
+
+  .qrBlock,
+  .rubricSection,
+  .footer {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .qrBlock {
+    gap: 12px;
+    align-items: center;
+  }
+
+  .qrImage {
+    width: 84px;
+    height: 84px;
+    border: 1px solid #d1d5db;
+  }
+
+  .metaCode,
+  .pitch,
+  .notFoundTitle,
+  .notFoundBody,
+  .qrCopy,
+  .qrCopy strong,
+  .rubricItem,
+  .footer {
+    color: black;
   }
 }
