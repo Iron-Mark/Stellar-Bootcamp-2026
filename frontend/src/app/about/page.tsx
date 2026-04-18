@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
@@ -6,7 +7,27 @@ import { SiteNav } from "@/components/layout/site-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { CopyButton } from "@/components/ui/copy-button";
 import { Badge } from "@/components/ui/badge";
+import { JsonLd } from "@/components/ui/json-ld";
+import { LocalizedAboutCopy } from "@/components/about/localized-about-copy";
 import styles from "./page.module.css";
+
+export const metadata: Metadata = {
+  title: "About",
+  description:
+    "Why Stellaroid Earn exists — certificates should be verifiable in seconds, not emails, and payment should follow on the same tap.",
+};
+
+const BASE_URL = "https://stellaroid-earn-demo.vercel.app";
+
+const aboutJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  name: "About — Stellaroid Earn",
+  url: `${BASE_URL}/about`,
+  description:
+    "A thin piece of software around one idea: certificates should be verifiable in seconds, not emails. And if they're verifiable, the grad should get paid on the same tap.",
+  isPartOf: { "@type": "WebApplication", name: "Stellaroid Earn", url: BASE_URL },
+};
 
 const stack = [
   {
@@ -227,6 +248,8 @@ export default function About() {
     : appConfig.explorerUrl;
 
   return (
+    <>
+    <JsonLd data={aboutJsonLd} />
     <div className={styles.page}>
       <SiteNav />
       <main id="main">
@@ -235,11 +258,7 @@ export default function About() {
           <h1>
             Why <em>Stellaroid Earn</em>
           </h1>
-          <p className={styles.lede}>
-            A thin piece of software around one idea: certificates should be
-            verifiable in seconds, not emails. And if they&rsquo;re verifiable, the grad
-            should get paid on the same tap.
-          </p>
+          <LocalizedAboutCopy id="lede" className={styles.lede} />
         </section>
 
         <div className={styles.container}>
@@ -306,9 +325,7 @@ export default function About() {
                 </div>
               </li>
             </ol>
-            <p className={styles.storyKicker}>
-              The certificate is real. The problem is that proving it costs more than hiring around it.
-            </p>
+            <LocalizedAboutCopy id="problemKicker" className={styles.storyKicker} />
           </article>
 
           <article className={`${styles.card} ${styles.storyCard}`}>
@@ -354,9 +371,7 @@ export default function About() {
                 </div>
               </li>
             </ol>
-            <p className={styles.storyKicker}>
-              The canonical output isn&rsquo;t the UI — it&rsquo;s the <em>event stream on stellar.expert</em>. The proof is public by default.
-            </p>
+            <LocalizedAboutCopy id="approachKicker" className={styles.storyKicker} />
           </article>
         </div>
 
@@ -530,5 +545,6 @@ export default function About() {
 
       <SiteFooter />
     </div>
+    </>
   );
 }
