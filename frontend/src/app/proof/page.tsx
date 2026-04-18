@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { SiteNav } from "@/components/layout/site-nav";
+
+export const metadata: Metadata = {
+  title: "Look Up a Certificate",
+  description:
+    "Paste a SHA-256 hash to view its on-chain record — owner wallet, issuer, and verification status. No wallet required.",
+};
 import { SiteFooter } from "@/components/layout/site-footer";
 import { ProofIndexForm } from "@/components/proof/proof-index-form";
 import { DEFAULT_SAMPLE_PROOF_HASH } from "@/lib/demo-data";

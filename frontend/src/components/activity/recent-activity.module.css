@@ -7,6 +7,21 @@
   border-radius: var(--radius-lg);
 }
 
+.compactCard {
+  padding: 18px;
+  border-radius: 20px;
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.18);
+}
+
+.sidebarCard {
+  padding: 14px;
+  border-radius: 22px;
+  background: rgba(10, 18, 32, 0.72);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 22px 54px rgba(2, 8, 23, 0.28);
+}
+
 .head {
   display: flex;
   align-items: flex-end;
@@ -16,8 +31,19 @@
   flex-wrap: wrap;
 }
 
+.compactHead {
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.sidebarHead {
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
 .eyebrow {
   margin: 0 0 6px;
+  font-family: var(--font-pixel);
   color: var(--color-primary);
   font-size: 0.75rem;
   font-weight: 700;
@@ -31,10 +57,40 @@
   letter-spacing: var(--ls-tight);
 }
 
+.compactEyebrow {
+  font-size: 0.68rem;
+  margin-bottom: 4px;
+}
+
+.sidebarEyebrow {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  opacity: 0.9;
+}
+
+.compactTitle {
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+.sidebarTitle {
+  font-size: 1rem;
+  line-height: 1.2;
+}
+
 .viewAll {
   color: var(--color-text);
   text-decoration: none;
   font-size: 0.875rem;
+}
+
+.compactViewAll {
+  font-size: 0.8rem;
+}
+
+.sidebarViewAll {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
 }
 
 .viewAll:hover {
@@ -59,6 +115,42 @@
   color: var(--color-text);
 }
 
+.compactRow {
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "label time"
+    "detail detail"
+    "hash hash";
+  gap: 8px 10px;
+  padding: 12px 13px;
+}
+
+.sidebarCard .compactRow {
+  padding: 10px 11px;
+  border-radius: 16px;
+  background: rgba(15, 23, 42, 0.46);
+}
+
+.compactRow .label {
+  grid-area: label;
+  justify-self: start;
+}
+
+.compactRow .detail {
+  grid-area: detail;
+  font-size: 0.875rem;
+}
+
+.compactRow .hash {
+  grid-area: hash;
+  font-size: 0.75rem;
+}
+
+.compactRow .time {
+  grid-area: time;
+  font-size: 0.75rem;
+}
+
 .row:hover {
   border-color: var(--color-primary);
 }
@@ -70,6 +162,7 @@
   min-height: 30px;
   padding: 0 10px;
   border-radius: 999px;
+  font-family: var(--font-pixel);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
@@ -115,6 +208,25 @@
   color: var(--color-text-muted);
   font-size: 0.8125rem;
   white-space: nowrap;
+}
+
+.emptyState {
+  color: var(--color-text-muted);
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 32px 0;
+  margin: 0;
+}
+
+.compactEmptyState {
+  padding: 18px 0 6px;
+  text-align: left;
+  line-height: 1.5;
+}
+
+.sidebarCard .compactEmptyState {
+  padding: 12px 2px 4px;
+  font-size: 0.8125rem;
 }
 
 @media (max-width: 820px) {

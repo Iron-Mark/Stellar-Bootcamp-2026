@@ -34,6 +34,7 @@
 }
 
 .eyebrow {
+  font-family: var(--font-pixel);
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;

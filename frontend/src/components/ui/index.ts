@@ -17,3 +17,5 @@ export { ToastProvider, ToastContext } from "./toast";
 export type { ToastTone, ToastInput, ToastAction } from "./toast";
 
 export { useToast } from "./use-toast";
+
+export { JsonLd } from "./json-ld";
