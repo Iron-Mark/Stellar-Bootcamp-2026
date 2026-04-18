@@ -8,6 +8,25 @@ Use this as the live backlog. Items already shipped are called out so we do not 
 
 ## Resolved
 
+### 3. Locale toggle covers the full site
+
+**Status**
+- Done.
+
+**What shipped**
+- `frontend/src/hooks/use-locale.ts` — shared subscription hook
+- `frontend/src/lib/i18n.ts` — typed en/tl dictionary (hero, footer, about, app sections)
+- `frontend/src/components/layout/footer-tagline.tsx` — client island for footer brand tagline
+- `frontend/src/components/about/localized-about-copy.tsx` — client island for about lede + story kickers
+- Updated: `localized-hero.tsx`, `site-footer.tsx`, `about/page.tsx`, `next-action-card.tsx`
+
+**Notes**
+- Translations use Taglish (natural Filipino English code-switching), not formal Tagalog.
+- Server components stay server components; only the three text islands are client-rendered on /about.
+- Navigation links, form labels, error messages, and technical identifiers remain English.
+
+---
+
 ### 8. Sitemap + robots.txt
 
 **Status**
@@ -85,27 +104,6 @@ Freighter is a desktop browser extension. `/app` still assumes the wallet flow a
 - `frontend/src/components/wallet/*`
 - `frontend/src/components/onboarding/freighter-welcome.tsx`
 - `frontend/src/app/app/page.tsx`
-
----
-
-### 3. Locale toggle only covers the hero
-
-**What**
-The footer toggle still changes only the homepage hero copy. `/about`, `/app`, footer copy, and the rest of the site remain English, so the scope is still misleading.
-
-**Current behavior**
-- Toggle still lives in the footer.
-- Only `LocalizedHero` subscribes to locale changes.
-
-**Options**
-- **A (fast)** Move the toggle inside the hero with copy that makes the scope explicit.
-- **B (right)** Add a lightweight i18n dictionary/context and translate at least hero, footer, `/about`, `/app`, and FAQ/demo-script-facing copy.
-
-**Files**
-- `frontend/src/components/layout/locale-toggle.tsx`
-- `frontend/src/components/layout/site-footer.tsx`
-- `frontend/src/components/landing/localized-hero.tsx`
-- likely new `frontend/src/lib/i18n/*`
 
 ---
 
