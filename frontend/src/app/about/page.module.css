@@ -5,13 +5,15 @@
 }
 
 .hero {
-  max-width: 760px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 72px 28px 48px;
+  text-align: center;
 }
 
 .eyebrow {
   display: inline-block;
+  font-family: var(--font-pixel);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -42,7 +44,7 @@
   color: var(--color-text-muted);
   font-size: 17px;
   line-height: 1.6;
-  margin: 0;
+  margin: 0 auto;
   max-width: 620px;
 }
 
@@ -93,6 +95,7 @@
 .statIcon svg { width: 16px; height: 16px; }
 
 .statCategory {
+  font-family: var(--font-pixel);
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -168,6 +171,7 @@
 }
 
 .errCategory {
+  font-family: var(--font-pixel);
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -221,6 +225,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: var(--font-pixel);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -328,6 +333,7 @@
 }
 
 .beatLabel {
+  font-family: var(--font-pixel);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -542,6 +548,7 @@
 }
 
 .fnGroupBadge {
+  font-family: var(--font-pixel);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -675,6 +682,7 @@
 }
 
 .creditsRow dt {
+  font-family: var(--font-pixel);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -742,6 +750,7 @@
 
 .ctaPrimary:hover {
   background: var(--color-primary-hover);
+  color: var(--color-on-primary);
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
 }
@@ -752,7 +761,7 @@
   background: transparent;
 }
 
-.ctaGhost:hover { background: var(--color-surface); transform: translateY(-1px); }
+.ctaGhost:hover { background: var(--color-surface); color: var(--color-text); transform: translateY(-1px); }
 
 @media (prefers-reduced-motion: reduce) {
   .ctaPrimary:hover, .ctaGhost:hover { transform: none; }

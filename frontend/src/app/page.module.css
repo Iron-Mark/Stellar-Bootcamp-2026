@@ -51,8 +51,15 @@
   text-align: center;
 }
 
+.mobileActivitySection {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
 .eyebrow {
   display: inline-block;
+  font-family: var(--font-pixel);
   font-size: 12px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -135,6 +142,7 @@
 
 .ctaPrimary:hover {
   background: var(--color-primary-hover);
+  color: var(--color-on-primary);
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.25);
 }
@@ -207,6 +215,7 @@
   border-radius: 50%;
   background: rgba(245, 158, 11, 0.14);
   color: var(--color-primary);
+  font-family: var(--font-pixel);
   font-weight: 700;
   font-size: 14px;
   margin-bottom: 12px;
@@ -319,11 +328,26 @@
 
 .footer a { color: var(--color-text-muted); text-decoration: underline; }
 
+.heroIllust {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 48px auto 0;
+  image-rendering: pixelated;
+}
+
 @media (max-width: 600px) {
   .h1 { font-size: 40px; }
   .hero { padding: 64px 20px 40px; }
   .localeScope {
     border-radius: var(--radius-md);
     padding: 12px;
+  }
+  .heroIllust { margin-top: 28px; }
+}
+
+@media (min-width: 1041px) {
+  .mobileActivitySection {
+    display: none;
   }
 }

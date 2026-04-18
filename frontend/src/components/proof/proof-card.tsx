@@ -48,16 +48,34 @@ export function ProofCard({
   const shortContract = shortenAddress(contractId, 8);
   const shortHash = shortenAddress(hash, 8);
 
-  const verifiedTone = cert?.verified
-    ? "verified"
-    : cert
-      ? "warning"
-      : "neutral";
-  const verifiedLabel = cert?.verified
-    ? "Verified"
-    : cert
-      ? "Registered"
-      : "Not found";
+  const statusTone = lookupFailed
+    ? "warning"
+    : cert?.verified
+      ? "verified"
+      : cert
+        ? "warning"
+        : "neutral";
+  const statusLabel = lookupFailed
+    ? "Lookup failed"
+    : cert?.verified
+      ? "Verified"
+      : cert
+        ? "Pending verification"
+        : "Not found";
+  const statusTitle = lookupFailed
+    ? "Proof status is temporarily unavailable."
+    : cert?.verified
+      ? "This certificate is verified on-chain."
+      : cert
+        ? "This certificate is registered, but not yet verified."
+        : "No on-chain certificate found for this hash.";
+  const statusBody = lookupFailed
+    ? "RPC lookup failed. Refresh once and retry in a few seconds."
+    : cert?.verified
+      ? "Owner and issuer records are present, and verification is complete."
+      : cert
+        ? "A verifier still needs to submit the verify action for this certificate hash."
+        : "Double-check the hash input, or try another certificate hash.";
 
   return (
     <div className={styles.shell}>
@@ -65,8 +83,8 @@ export function ProofCard({
         {/* 1. Header row */}
         <header className={styles.headerRow}>
           <Badge tone="accent">Stellar testnet</Badge>
-          <Badge tone={lookupFailed ? "warning" : verifiedTone} dot>
-            {lookupFailed ? "Lookup failed" : verifiedLabel}
+          <Badge tone={statusTone} dot>
+            {statusLabel}
           </Badge>
         </header>
 
@@ -74,6 +92,16 @@ export function ProofCard({
         <h1 className={styles.pitch}>
           On-chain credential + direct payment rail on Stellar testnet.
         </h1>
+
+        <section className={styles.statusSummary} aria-label="Proof status summary">
+          <p className={styles.statusTitle}>{statusTitle}</p>
+          <p className={styles.statusBody}>{statusBody}</p>
+          {cert && !cert.verified ? (
+            <Link href="/app" className={styles.statusCta}>
+              Mark as verified in app →
+            </Link>
+          ) : null}
+        </section>
 
         {/* 3. Contract ID row */}
         <div className={styles.metaRow}>
@@ -133,9 +161,9 @@ export function ProofCard({
               })()}
             </div>
             <div className={styles.certRow}>
-              <span className={styles.metaLabel}>Verified</span>
+              <span className={styles.metaLabel}>Verification</span>
               <Badge tone={cert.verified ? "verified" : "warning"} dot>
-                {cert.verified ? "Yes" : "Pending"}
+                {cert.verified ? "Verified" : "Pending"}
               </Badge>
             </div>
           </section>
@@ -146,6 +174,7 @@ export function ProofCard({
               alt=""
               width={160}
               height={107}
+              loading="lazy"
               style={{ imageRendering: "pixelated", marginBottom: 12 }}
             />
             {lookupFailed ? (

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
+import { ActivitySnackbar } from "@/components/activity/activity-snackbar";
 import { RecentActivity } from "@/components/activity/recent-activity";
 import { SiteNav } from "@/components/layout/site-nav";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -18,11 +19,14 @@ export default function Landing() {
   return (
     <div className={styles.page}>
       <SiteNav />
+      <ActivitySnackbar>
+        <RecentActivity compact sidebar />
+      </ActivitySnackbar>
       <main id="main">
         <LocalizedHero />
 
-        <section className={styles.section}>
-          <RecentActivity />
+        <section className={styles.mobileActivitySection}>
+          <RecentActivity compact />
         </section>
 
         <section className={styles.section}>

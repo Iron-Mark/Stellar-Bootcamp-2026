@@ -1,7 +1,8 @@
 // Compact, iframe-friendly Proof Block for embedding in portfolios, Notion, blogs.
 // Usage: <iframe src="https://.../proof/<hash>/embed" width="420" height="220" />
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -10,6 +11,8 @@ import {
 } from "@/lib/contract-read-server";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
+
+const HASH_RE = /^[0-9a-f]{64}$/i;
 
 interface PageProps {
   params: Promise<{ hash: string }>;
@@ -29,6 +32,8 @@ export async function generateMetadata({
 
 export default async function EmbedProof({ params }: PageProps) {
   const { hash } = await params;
+
+  if (!HASH_RE.test(hash)) notFound();
 
   let cert: CertificateRecord | null = null;
   try {
