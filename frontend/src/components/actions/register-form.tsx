@@ -71,7 +71,6 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [hashing, setHashing] = useState(false);
-  const [pageDragging, setPageDragging] = useState(false);
   const [autofilled, setAutofilled] = useState(false);
 
   const [studentTouched, setStudentTouched] = useState(false);
@@ -417,7 +416,7 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
           variant="primary"
           loading={submitting}
           disabled={!canSubmit}
-          icon={<img src="/ui-icons/icon-register-cert.svg" width="16" height="16" aria-hidden="true" />}
+          icon={<img src="/ui-icons/icon-register-cert.svg" alt="" width="16" height="16" aria-hidden="true" />}
         >
           Register Certificate
         </Button>
