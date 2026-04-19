@@ -25,9 +25,9 @@ This folder is the **marketing + demo hub** for Stellaroid Earn. It is aimed at 
 
 ## Live demo
 
-- **App:** deployed to Vercel (see project dashboard for URL)
+- **App:** https://stellaroid-earn-demo.vercel.app/
 - **Network:** Stellar **testnet**
-- **Contract ID:** `CDWCARXLJUJ5ISC3GPXRLR5HC6QPLMGULCVRIACYKQM4U5AG7TFWXHVZ`
+- **Contract ID:** `CBNSOFNXAOIFFKCOZLT7UZ5EEPB3ML2DP4YUGF24M4VBJCUWEHI2DX2Y`
 - **Wallet:** [Freighter](https://www.freighter.app/) (testnet mode)
 
 ## Run it locally
