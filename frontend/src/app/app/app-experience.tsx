@@ -239,7 +239,10 @@ export function AppExperience({ sidebarActivity }: AppExperienceProps) {
               <p className="font-pixel text-[10.5px] font-semibold tracking-[0.1em] uppercase text-text-muted mb-3">Progress</p>
               <MilestoneRail state={milestones} orientation="vertical" />
             </div>
-            <ProofBlockPreview hash={milestones.lastHash} />
+            <ProofBlockPreview
+              hash={milestones.lastHash}
+              certStatus={milestones.credentialStatus}
+            />
           </aside>
         </div>
         {!showWalletEmptyState ? <DemoAutofillButton registered={milestones.registered} /> : null}
