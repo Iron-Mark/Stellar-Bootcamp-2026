@@ -71,7 +71,6 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
   const [advancedOpen, setAdvancedOpen] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [hashing, setHashing] = useState(false);
-  const [pageDragging, setPageDragging] = useState(false);
   const [autofilled, setAutofilled] = useState(false);
 
   const [studentTouched, setStudentTouched] = useState(false);
