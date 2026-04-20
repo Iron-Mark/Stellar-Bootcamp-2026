@@ -9,7 +9,7 @@ const PROOF_METADATA: Record<string, ProofMetadata> = {
       "Awarded after shipping a working Soroban contract, deploying it to Stellar testnet, and demoing the full register, verify, and pay flow through Freighter.",
     cohort: "Stellar PH Bootcamp 2026",
     criteria:
-      "Complete the assigned Soroban contract, pass the test suite, deploy to Stellar testnet, connect the dApp to Freighter, and present an end-to-end proof block demo.",
+      "Complete the assigned Soroban contract, pass the test suite, deploy to Stellar testnet, connect the dApp to Freighter, and present an end-to-end verified badge demo.",
     skills: [
       "Soroban smart contracts",
       "Stellar testnet deployment",
@@ -27,8 +27,8 @@ const PROOF_METADATA: Record<string, ProofMetadata> = {
         href: "/app",
       },
       {
-        label: "Bootcamp contract proof block",
-        href: "https://stellar.expert/explorer/testnet/contract/CBNSOFNXAOIFFKCOZLT7UZ5EEPB3ML2DP4YUGF24M4VBJCUWEHI2DX2Y",
+        label: "Bootcamp contract verified badge",
+        href: "https://stellar.expert/explorer/testnet/contract/CA7P5EPYKC2IW4PCMAH6NRBLHH3WP7AN6WWC3QDRWO4HLE47FAGO6TET",
       },
     ],
   },

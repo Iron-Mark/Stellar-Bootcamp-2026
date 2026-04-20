@@ -3,8 +3,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 import { Menu, X, GitFork } from "lucide-react";
 import { Button } from "@/components/ui";
 import { cn } from "@/lib/utils";
@@ -20,14 +20,17 @@ const navLinks = [
 export function SiteNav() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(href + "/");
+
+  function isActive(href: string) {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  }
 
   return (
     <>
       <a
         href="#main"
-        className="absolute left-4 -top-12 z-[11] focus:top-3 px-3 py-2 rounded-md bg-primary text-on-primary font-semibold text-sm transition-[top] no-underline"
+        className="absolute left-4 -top-12 focus:top-3 z-50 px-3 py-2 rounded-md bg-primary text-on-primary font-semibold text-sm no-underline transition-[top] duration-150"
       >
         Skip to content
       </a>
@@ -62,7 +65,7 @@ export function SiteNav() {
                 key={l.href}
                 href={l.href}
                 className={cn(
-                  "no-underline transition-colors focus-visible:outline-primary rounded-sm pb-0.5",
+                  "no-underline transition-colors focus-visible:outline-primary pb-0.5",
                   isActive(l.href)
                     ? "text-primary border-b-2 border-primary"
                     : "text-text-muted hover:text-text"

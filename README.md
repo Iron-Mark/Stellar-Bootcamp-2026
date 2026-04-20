@@ -42,7 +42,7 @@ Issue, verify, and pay graduates on Stellar testnet — Soroban + Freighter, end
 </td>
 <td width="50%" align="center">
 <img src="images/proof-verified.png" alt="Verified proof block" width="100%"/><br/>
-<b>Verify</b> — On-chain proof block with green Verified badge
+<b>Verify</b> — On-chain credential with green Verified badge
 </td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@ Issue, verify, and pay graduates on Stellar testnet — Soroban + Freighter, end
 
 ## Live Trust Artifact
 
-Every credential produces a public **Proof Block** URL — no wallet, no login, no API key. Green means verified on-chain. Amber means issued but not yet verified.
+Every credential produces a public **Verified Badge** URL — no wallet, no login, no API key. Green means verified on-chain. Amber means issued but not yet verified.
 
 <table>
 <tr>
@@ -277,7 +277,7 @@ stellaroid-earn/
 │   │   ├── app/                # Next.js App Router pages
 │   │   │   ├── app/            # Participant dashboard (issuer + employer)
 │   │   │   ├── issuer/         # Issuer registration + lookup
-│   │   │   └── proof/[hash]/   # Public shareable proof block
+│   │   │   └── proof/[hash]/   # Public shareable verified badge
 │   │   ├── components/         # UI components (proof card, wallet, badges)
 │   │   ├── hooks/              # Freighter wallet state
 │   │   └── lib/                # Contract client, RPC helpers, types
@@ -303,6 +303,7 @@ stellaroid-earn/
 
 - [Rise In](https://www.risein.com/programs) — Stellar Smart Contract Bootcamp
 - [Stellar Philippines](https://stellar.org/) — Stellar PH Bootcamp 2026
+- [Workflow PH](https://www.facebook.com/WorkFlowPH/) — Community partner
 - [Stellar Docs](https://developers.stellar.org) · [Soroban SDK](https://docs.rs/soroban-sdk) · [Freighter](https://www.freighter.app/) · [Stellar Expert](https://stellar.expert/explorer/testnet)
 
 ---
