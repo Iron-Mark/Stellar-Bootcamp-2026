@@ -59,10 +59,13 @@ export function SiteFooter() {
             <nav aria-label="Site links" className="flex flex-col text-[13px]">
               <h2 className="font-pixel text-[11px] font-medium text-text-muted uppercase tracking-widest mb-3">Site</h2>
               <Link href="/"       className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Home</Link>
-              <Link href="/app"    className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">App</Link>
-              <Link href="/proof"  className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Verify</Link>
-              <Link href="/issuer" className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Issuer</Link>
-              <Link href="/about"  className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">About</Link>
+              <Link href="/app"        className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">App</Link>
+              <Link href="/proof"      className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Verify</Link>
+              <Link href="/issuer"     className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Issuer</Link>
+              <Link href="/about"      className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">About</Link>
+              <Link href="/employer"   className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Employer</Link>
+              <Link href="/opportunity" className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Opportunities</Link>
+              <Link href="/talent"     className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Talent Passport</Link>
             </nav>
 
             {/* On-chain */}

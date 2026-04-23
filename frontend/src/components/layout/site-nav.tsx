@@ -15,6 +15,7 @@ const navLinks = [
   { href: "/proof", label: "Verify" },
   { href: "/issuer", label: "Issuer" },
   { href: "/app", label: "App" },
+  { href: "/employer", label: "Employer" },
 ];
 
 export function SiteNav() {
