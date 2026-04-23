@@ -177,6 +177,12 @@ export function NextActionCard({
           </button>
         </div>
       </div>
+      {/* Role guidance hint — visible only in fresh state */}
+      {walletConnected && !milestones.registered && !milestones.paid && (
+        <p className="text-xs text-text-muted italic px-4 py-2 m-0 border-t border-border/50">
+          {role === "issuer" ? t.roleHintIssuer : t.roleHintEmployer}
+        </p>
+      )}
       {/* Body */}
       <div className="flex items-center gap-3 p-4 max-[420px]:px-4 max-[420px]:pt-4 max-[420px]:pb-5">
         {!walletConnected && (

@@ -14,6 +14,9 @@ next-env.d.ts
 .env.local
 .env.*.local
 
+# Testnet credentials (secret keys)
+testnet-accounts.json
+
 # OS / editor
 .DS_Store
 *.log

@@ -36,6 +36,8 @@ export type I18nDict = {
     paySubtitle: string;
     doneTitle: string;
     doneSubtitle: string;
+    roleHintIssuer: string;
+    roleHintEmployer: string;
   };
 };
 
@@ -80,6 +82,10 @@ export const i18n: Record<Locale, I18nDict> = {
       paySubtitle: "Send the payment amount linked to this certificate.",
       doneTitle: "All done",
       doneSubtitle: "The verified badge is ready to share.",
+      roleHintIssuer:
+        "You're an educator or institution that issues and verifies certificates.",
+      roleHintEmployer:
+        "You're a company that wants to verify a graduate's credential and pay them.",
     },
   },
   tl: {
@@ -123,6 +129,10 @@ export const i18n: Record<Locale, I18nDict> = {
         "I-send ang payment amount na naka-link sa certificate na ito.",
       doneTitle: "Tapos na",
       doneSubtitle: "Handa na ang verified badge para i-share.",
+      roleHintIssuer:
+        "Ikaw ay educator o institution na nag-iissue at nag-ve-verify ng certificates.",
+      roleHintEmployer:
+        "Ikaw ay company na gustong i-verify ang credential ng graduate at bayaran sila.",
     },
   },
 };

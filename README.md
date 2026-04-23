@@ -86,6 +86,8 @@ Contract on Stellar Expert: [`CA7P5EPY…GO6TET`](https://stellar.expert/explore
 
 ## Architecture
 
+> Full architecture document: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+
 ```mermaid
 sequenceDiagram
   autonumber
@@ -288,6 +290,45 @@ stellaroid-earn/
 ├── LICENSE
 └── README.md
 ```
+
+---
+
+## Demo Video
+
+<!-- TODO: Replace with your actual demo video link -->
+[![Demo Video](https://img.shields.io/badge/Demo_Video-Watch_on_Loom-625DF5?style=for-the-badge&logo=loom&logoColor=white)](<!-- TODO: Replace with Loom/YouTube link -->)
+
+> Full walkthrough: connect wallet → register issuer → issue credential → verify on-chain → employer pays graduate in XLM → public proof page.
+
+---
+
+## User Validation
+
+### Testnet Users
+
+5+ real users tested the MVP on Stellar testnet. Each wallet address is verifiable on [Stellar Expert](https://stellar.expert/explorer/testnet).
+
+| # | Wallet Address | Verified On-Chain |
+|---|---------------|-------------------|
+| 1 | `GCBBBLZVJVVM2ZMXPNMDN2ATH7AJ2H4BHOKA7JOJT6EMWTOKCGRKUK6I` | [Stellar Expert](https://stellar.expert/explorer/testnet/account/GCBBBLZVJVVM2ZMXPNMDN2ATH7AJ2H4BHOKA7JOJT6EMWTOKCGRKUK6I) |
+| 2 | `GALGZBDSFG4FRTFSO7XLURBJRYC6PA34H73IF66G7BZOXXQDMWSHPXEU` | [Stellar Expert](https://stellar.expert/explorer/testnet/account/GALGZBDSFG4FRTFSO7XLURBJRYC6PA34H73IF66G7BZOXXQDMWSHPXEU) |
+| 3 | `GAWJEP7LWY7WPLP7SBPR4MWQGQJIBAHVNVXYQE33F5FL2VFMFGBBFZ4B` | [Stellar Expert](https://stellar.expert/explorer/testnet/account/GAWJEP7LWY7WPLP7SBPR4MWQGQJIBAHVNVXYQE33F5FL2VFMFGBBFZ4B) |
+| 4 | `GCBZAJUZXRHNLVR4RCG743KSTKQSVFKXQCNYWAH4FVHDVSS5IT6DWSI3` | [Stellar Expert](https://stellar.expert/explorer/testnet/account/GCBZAJUZXRHNLVR4RCG743KSTKQSVFKXQCNYWAH4FVHDVSS5IT6DWSI3) |
+| 5 | `GAQZJQPZI7YZBUN6YVAFACVKAH6ODNBO3DVELP34VW4MLLUBCL5DMMNS` | [Stellar Expert](https://stellar.expert/explorer/testnet/account/GAQZJQPZI7YZBUN6YVAFACVKAH6ODNBO3DVELP34VW4MLLUBCL5DMMNS) |
+
+### Feedback Collection
+
+- **Google Form:** [Stellaroid Earn — User Feedback Form](<!-- TODO: Replace with Google Form link -->)
+- **Exported responses:** [`docs/user-feedback-responses.csv`](docs/user-feedback-responses.csv)
+- **Full feedback documentation:** [`docs/USER_FEEDBACK.md`](docs/USER_FEEDBACK.md)
+
+### Improvements Based on Feedback
+
+After collecting feedback from testnet users, the following iteration was completed:
+
+| Feedback | Improvement | Commit |
+|----------|-------------|--------|
+| Users confused about which role (Issuer vs Employer) to pick after connecting wallet | Added contextual role guidance hints below the persona toggle | <!-- TODO: fill after commit --> |
 
 ---
 
