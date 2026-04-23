@@ -63,8 +63,6 @@ export function SiteFooter() {
               <Link href="/proof"  className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Verify</Link>
               <Link href="/issuer" className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Issuer</Link>
               <Link href="/about"  className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">About</Link>
-              <Link href="/metrics" className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Metrics</Link>
-              <Link href="/slides"  className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Demo Presentation</Link>
             </nav>
 
             {/* On-chain */}
@@ -85,6 +83,8 @@ export function SiteFooter() {
                 <span className="visually-hidden"> (opens in new tab)</span>
                 <ExternalLink className="w-3 h-3 shrink-0 opacity-50" aria-hidden="true" />
               </a>
+              <Link href="/metrics" className="py-1.5 text-text-muted hover:text-primary transition-colors no-underline">Metrics</Link>
+              <Link href="/slides"  className="py-1.5 text-text-muted hover:text-primary transition-colors no-underline">Demo Presentation</Link>
             </nav>
 
             {/* Source */}
