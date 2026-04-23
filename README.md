@@ -251,6 +251,46 @@ test result: ok. 6 passed; 0 failed; 0 ignored
 
 ---
 
+## Security
+
+Full security checklist: [`docs/SECURITY.md`](docs/SECURITY.md)
+
+Covers: smart contract access control, frontend CSP/HSTS/X-Frame-Options, input validation, error normalization, SSRF prevention, and operational security. All items verified for testnet deployment.
+
+---
+
+## Advanced Feature: Fee Sponsorship (Gasless Transactions)
+
+Stellaroid Earn implements **fee bump transactions** ([CAP-0015](https://stellar.org/protocol/cap-15)) so that a sponsor account can pay gas fees on behalf of users — making credential verification and payment linking truly gasless.
+
+**How it works:**
+
+1. User signs a transaction normally via Freighter
+2. The signed XDR is sent to `/api/fee-bump` (server-side)
+3. Server wraps it in a `FeeBumpTransaction` signed by the sponsor keypair
+4. The fee-bumped transaction is submitted to the network — user pays zero fees
+
+**Implementation:**
+- Server route: [`frontend/src/app/api/fee-bump/route.ts`](frontend/src/app/api/fee-bump/route.ts)
+- Client helper: [`frontend/src/lib/fee-bump.ts`](frontend/src/lib/fee-bump.ts)
+- Config: `FEE_SPONSOR_SECRET` (server-only) + `NEXT_PUBLIC_FEE_SPONSOR_ADDRESS` (UI indicator)
+- Graceful fallback: if sponsor is unavailable, transactions proceed with user-paid fees
+
+---
+
+## Metrics & Monitoring
+
+- **Metrics dashboard:** [`/metrics`](https://stellaroid-earn-demo.vercel.app/metrics) — on-chain stats (events, proofs, transactions, certificates, rewards, payments) refreshed every 30s
+- **Health endpoint:** [`/api/health`](https://stellaroid-earn-demo.vercel.app/api/health) — JSON health check (config, RPC latency, contract availability)
+- **Events API:** [`/api/events`](https://stellaroid-earn-demo.vercel.app/api/events) — structured contract event data for external consumers
+- **Vercel Analytics:** Web analytics integrated via `@vercel/analytics`
+
+### Data Indexing
+
+Contract events are indexed by querying Soroban RPC's `getEvents` method across a 60,000-ledger window (~2 days). Events are decoded from ScVal, categorized by kind (`cert_reg`, `cert_ver`, `reward`, `payment`), and served via the `/api/events` REST endpoint and the `/metrics` dashboard. The approach is lightweight and serverless — no external indexer infrastructure required.
+
+---
+
 ## Tech Stack
 
 | Component | Version |
