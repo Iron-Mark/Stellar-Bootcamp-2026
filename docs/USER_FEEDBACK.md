@@ -19,11 +19,11 @@ The following wallet addresses interacted with the Stellaroid Earn contract on S
 
 | # | User | Wallet Address | Interaction | Stellar Expert Link |
 |---|------|---------------|-------------|---------------------|
-| 1 | Tester A — Bootcamp participant | `GCBBBLZVJVVM2ZMXPNMDN2ATH7AJ2H4BHOKA7JOJT6EMWTOKCGRKUK6I` | Viewed proof, submitted feedback | [View](https://stellar.expert/explorer/testnet/account/GCBBBLZVJVVM2ZMXPNMDN2ATH7AJ2H4BHOKA7JOJT6EMWTOKCGRKUK6I) |
-| 2 | Tester B — Employer role tester | `GALGZBDSFG4FRTFSO7XLURBJRYC6PA34H73IF66G7BZOXXQDMWSHPXEU` | Registered as issuer | [View](https://stellar.expert/explorer/testnet/account/GALGZBDSFG4FRTFSO7XLURBJRYC6PA34H73IF66G7BZOXXQDMWSHPXEU) |
-| 3 | Tester C — Issuer flow tester | `GAWJEP7LWY7WPLP7SBPR4MWQGQJIBAHVNVXYQE33F5FL2VFMFGBBFZ4B` | Received XLM payment | [View](https://stellar.expert/explorer/testnet/account/GAWJEP7LWY7WPLP7SBPR4MWQGQJIBAHVNVXYQE33F5FL2VFMFGBBFZ4B) |
-| 4 | Tester D — Mobile UX tester | `GCBZAJUZXRHNLVR4RCG743KSTKQSVFKXQCNYWAH4FVHDVSS5IT6DWSI3` | Verified credential | [View](https://stellar.expert/explorer/testnet/account/GCBZAJUZXRHNLVR4RCG743KSTKQSVFKXQCNYWAH4FVHDVSS5IT6DWSI3) |
-| 5 | Tester E — Proof verification tester | `GAQZJQPZI7YZBUN6YVAFACVKAH6ODNBO3DVELP34VW4MLLUBCL5DMMNS` | Connected wallet, explored dashboard | [View](https://stellar.expert/explorer/testnet/account/GAQZJQPZI7YZBUN6YVAFACVKAH6ODNBO3DVELP34VW4MLLUBCL5DMMNS) |
+| 1 | Tester A  - Bootcamp participant | `GCBBBLZVJVVM2ZMXPNMDN2ATH7AJ2H4BHOKA7JOJT6EMWTOKCGRKUK6I` | Viewed proof, submitted feedback | [View](https://stellar.expert/explorer/testnet/account/GCBBBLZVJVVM2ZMXPNMDN2ATH7AJ2H4BHOKA7JOJT6EMWTOKCGRKUK6I) |
+| 2 | Tester B  - Employer role tester | `GALGZBDSFG4FRTFSO7XLURBJRYC6PA34H73IF66G7BZOXXQDMWSHPXEU` | Registered as issuer | [View](https://stellar.expert/explorer/testnet/account/GALGZBDSFG4FRTFSO7XLURBJRYC6PA34H73IF66G7BZOXXQDMWSHPXEU) |
+| 3 | Tester C  - Issuer flow tester | `GAWJEP7LWY7WPLP7SBPR4MWQGQJIBAHVNVXYQE33F5FL2VFMFGBBFZ4B` | Received XLM payment | [View](https://stellar.expert/explorer/testnet/account/GAWJEP7LWY7WPLP7SBPR4MWQGQJIBAHVNVXYQE33F5FL2VFMFGBBFZ4B) |
+| 4 | Tester D  - Mobile UX tester | `GCBZAJUZXRHNLVR4RCG743KSTKQSVFKXQCNYWAH4FVHDVSS5IT6DWSI3` | Verified credential | [View](https://stellar.expert/explorer/testnet/account/GCBZAJUZXRHNLVR4RCG743KSTKQSVFKXQCNYWAH4FVHDVSS5IT6DWSI3) |
+| 5 | Tester E  - Proof verification tester | `GAQZJQPZI7YZBUN6YVAFACVKAH6ODNBO3DVELP34VW4MLLUBCL5DMMNS` | Connected wallet, explored dashboard | [View](https://stellar.expert/explorer/testnet/account/GAQZJQPZI7YZBUN6YVAFACVKAH6ODNBO3DVELP34VW4MLLUBCL5DMMNS) |
 
 ---
 
@@ -41,8 +41,8 @@ The following wallet addresses interacted with the Stellaroid Earn contract on S
 ### Common Themes
 
 **What users liked:**
-- Clean proof verification page — no login needed
-- On-chain transparency — everything verifiable on Stellar Expert
+- Clean proof verification page  - no login needed
+- On-chain transparency  - everything verifiable on Stellar Expert
 - Fast transaction finality on testnet
 
 **What users wanted improved:**

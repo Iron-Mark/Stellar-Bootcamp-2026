@@ -2,7 +2,7 @@
 
 **On-chain credential trust for Stellar PH Bootcamp 2026**
 
-Issue, verify, and pay graduates on Stellar testnet — Soroban + Freighter, end-to-end.
+Issue, verify, and pay graduates on Stellar testnet  - Soroban + Freighter, end-to-end.
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-stellaroid--earn-F59E0B?style=for-the-badge&logo=vercel&logoColor=white)](https://stellaroid-earn-demo.vercel.app/)
 [![Stellar Testnet](https://img.shields.io/badge/Stellar-Testnet-7C3AED?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.expert/explorer/testnet/contract/CA7P5EPYKC2IW4PCMAH6NRBLHH3WP7AN6WWC3QDRWO4HLE47FAGO6TET)
@@ -17,18 +17,18 @@ Issue, verify, and pay graduates on Stellar testnet — Soroban + Freighter, end
 | **Live demo** | [stellaroid-earn-demo.vercel.app](https://stellaroid-earn-demo.vercel.app/) |
 | **Contract (current)** | [`CA7P5EPYKC2IW4PCMAH6NRBLHH3WP7AN6WWC3QDRWO4HLE47FAGO6TET`](https://stellar.expert/explorer/testnet/contract/CA7P5EPYKC2IW4PCMAH6NRBLHH3WP7AN6WWC3QDRWO4HLE47FAGO6TET) |
 | **Tx evidence** | [init](https://stellar.expert/explorer/testnet/tx/5f949662b430b059b71c9541a971852c527f869b537e123d3f3fb154f93c2e57) · [register](https://stellar.expert/explorer/testnet/tx/277075bbe55fc111f8c7888d72aa974eba5d1f596fa64900c466714ea57e320f) · [verify](https://stellar.expert/explorer/testnet/tx/47ad9094dff1895b68819afeb9b94f30146454c9d2ab1d580347e53139f7c896) · [payment](https://stellar.expert/explorer/testnet/tx/9a60bd71b8f37e89893480bda31c23ebf6deb080e2eb8912d43cf4cba42ebc4b) |
-| **Source verified** | [Stellar Expert source validation](https://stellar.expert/explorer/testnet/contract/CA7P5EPYKC2IW4PCMAH6NRBLHH3WP7AN6WWC3QDRWO4HLE47FAGO6TET) — WASM hash linked to [GitHub commit `71d2b03`](https://github.com/Iron-Mark/Workshop-Stellaroid_Earn/commit/71d2b032a7ca1da4e2b2e2d0186a940a17e542e0) |
+| **Source verified** | [Stellar Expert source validation](https://stellar.expert/explorer/testnet/contract/CA7P5EPYKC2IW4PCMAH6NRBLHH3WP7AN6WWC3QDRWO4HLE47FAGO6TET)  - WASM hash linked to [GitHub commit `71d2b03`](https://github.com/Iron-Mark/Workshop-Stellaroid_Earn/commit/71d2b032a7ca1da4e2b2e2d0186a940a17e542e0) |
 | **Submission** | Rise In · Stellar Smart Contract Bootcamp · Stellar PH Bootcamp 2026 |
 
 ---
 
 ## 30-Second Pitch
 
-**Problem** — Bootcamp certificates are PDFs that anyone can fake and no one can independently verify. Employers skip verification or pay for a background check service.
+**Problem**  - Bootcamp certificates are PDFs that anyone can fake and no one can independently verify. Employers skip verification or pay for a background check service.
 
-**Solution** — Stellaroid Earn anchors credential hashes on a Soroban smart contract where approved issuers register and verify certificates, anyone checks proof at a public URL with no login, and employers pay graduates in XLM — all on-chain.
+**Solution**  - Stellaroid Earn anchors credential hashes on a Soroban smart contract where approved issuers register and verify certificates, anyone checks proof at a public URL with no login, and employers pay graduates in XLM  - all on-chain.
 
-**Why Stellar** — Sub-cent fees and 5-second finality make issuing credentials cheap enough to never skip. `simulateTransaction` lets anyone verify with zero wallet setup. Native XLM via SAC closes the loop from proof to payout on one chain.
+**Why Stellar**  - Sub-cent fees and 5-second finality make issuing credentials cheap enough to never skip. `simulateTransaction` lets anyone verify with zero wallet setup. Native XLM via SAC closes the loop from proof to payout on one chain.
 
 ---
 
@@ -38,21 +38,21 @@ Issue, verify, and pay graduates on Stellar testnet — Soroban + Freighter, end
 <tr>
 <td width="50%" align="center">
 <img src="images/landing-hero.png" alt="Landing page" width="100%"/><br/>
-<b>Discover</b> — Landing page with 3-step how-it-works flow
+<b>Discover</b>  - Landing page with 3-step how-it-works flow
 </td>
 <td width="50%" align="center">
 <img src="images/proof-verified.png" alt="Verified proof block" width="100%"/><br/>
-<b>Verify</b> — On-chain credential with green Verified badge
+<b>Verify</b>  - On-chain credential with green Verified badge
 </td>
 </tr>
 <tr>
 <td width="50%" align="center">
 <img src="images/app-dashboard.png" alt="App dashboard" width="100%"/><br/>
-<b>Issue &amp; Pay</b> — Dual-role dashboard for issuers and employers
+<b>Issue &amp; Pay</b>  - Dual-role dashboard for issuers and employers
 </td>
 <td width="50%" align="center">
 <img src="images/mobile-proof-card.png" alt="Mobile proof card" width="240"/><br/>
-<b>Share</b> — QR-scannable proof card on any mobile browser
+<b>Share</b>  - QR-scannable proof card on any mobile browser
 </td>
 </tr>
 </table>
@@ -61,7 +61,7 @@ Issue, verify, and pay graduates on Stellar testnet — Soroban + Freighter, end
 
 ## Live Trust Artifact
 
-Every credential produces a public **Verified Badge** URL — no wallet, no login, no API key. Green means verified on-chain. Amber means issued but not yet verified.
+Every credential produces a public **Verified Badge** URL  - no wallet, no login, no API key. Green means verified on-chain. Amber means issued but not yet verified.
 
 <table>
 <tr>
@@ -122,7 +122,7 @@ sequenceDiagram
 - **Issuer trust layer**: self-register → admin approve → issue credentials. Suspended issuers are blocked on-chain
 - **Two read paths**: server-side RSC with `revalidate=60` (CDN-cached proof pages) + client-side `simulateTransaction` (dashboard state)
 - **One write path**: Freighter signs → `sendTransaction` → poll for result
-- **CSP** locks `connect-src` to `*.stellar.org` — no third-party data leaks
+- **CSP** locks `connect-src` to `*.stellar.org`  - no third-party data leaks
 
 ---
 
@@ -261,14 +261,14 @@ Covers: smart contract access control, frontend CSP/HSTS/X-Frame-Options, input 
 
 ## Advanced Feature: Fee Sponsorship (Gasless Transactions)
 
-Stellaroid Earn implements **fee bump transactions** ([CAP-0015](https://stellar.org/protocol/cap-15)) so that a sponsor account can pay gas fees on behalf of users — making credential verification and payment linking truly gasless.
+Stellaroid Earn implements **fee bump transactions** ([CAP-0015](https://stellar.org/protocol/cap-15)) so that a sponsor account can pay gas fees on behalf of users  - making credential verification and payment linking truly gasless.
 
 **How it works:**
 
 1. User signs a transaction normally via Freighter
 2. The signed XDR is sent to `/api/fee-bump` (server-side)
 3. Server wraps it in a `FeeBumpTransaction` signed by the sponsor keypair
-4. The fee-bumped transaction is submitted to the network — user pays zero fees
+4. The fee-bumped transaction is submitted to the network  - user pays zero fees
 
 **Implementation:**
 - Server route: [`frontend/src/app/api/fee-bump/route.ts`](frontend/src/app/api/fee-bump/route.ts)
@@ -280,14 +280,14 @@ Stellaroid Earn implements **fee bump transactions** ([CAP-0015](https://stellar
 
 ## Metrics & Monitoring
 
-- **Metrics dashboard:** [`/metrics`](https://stellaroid-earn-demo.vercel.app/metrics) — on-chain stats (events, proofs, transactions, certificates, rewards, payments) refreshed every 30s
-- **Health endpoint:** [`/api/health`](https://stellaroid-earn-demo.vercel.app/api/health) — JSON health check (config, RPC latency, contract availability)
-- **Events API:** [`/api/events`](https://stellaroid-earn-demo.vercel.app/api/events) — structured contract event data for external consumers
+- **Metrics dashboard:** [`/metrics`](https://stellaroid-earn-demo.vercel.app/metrics)  - on-chain stats (events, proofs, transactions, certificates, rewards, payments) refreshed every 30s
+- **Health endpoint:** [`/api/health`](https://stellaroid-earn-demo.vercel.app/api/health)  - JSON health check (config, RPC latency, contract availability)
+- **Events API:** [`/api/events`](https://stellaroid-earn-demo.vercel.app/api/events)  - structured contract event data for external consumers
 - **Vercel Analytics:** Web analytics integrated via `@vercel/analytics`
 
 ### Data Indexing
 
-Contract events are indexed by querying Soroban RPC's `getEvents` method across a 60,000-ledger window (~2 days). Events are decoded from ScVal, categorized by kind (`cert_reg`, `cert_ver`, `reward`, `payment`), and served via the `/api/events` REST endpoint and the `/metrics` dashboard. The approach is lightweight and serverless — no external indexer infrastructure required.
+Contract events are indexed by querying Soroban RPC's `getEvents` method across a 60,000-ledger window (~2 days). Events are decoded from ScVal, categorized by kind (`cert_reg`, `cert_ver`, `reward`, `payment`), and served via the `/api/events` REST endpoint and the `/metrics` dashboard. The approach is lightweight and serverless  - no external indexer infrastructure required.
 
 ---
 
@@ -405,7 +405,7 @@ After collecting feedback from testnet users, the following iteration was comple
 
 ## Built By
 
-**Mark Siazon** — Hybrid Product Designer & Full-Stack Developer
+**Mark Siazon**  - Hybrid Product Designer & Full-Stack Developer
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-marksiazon.dev-F59E0B?style=flat-square&logo=vercel&logoColor=white)](https://www.marksiazon.dev/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Mark_Siazon-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mark-siazon/)<br>
@@ -414,11 +414,11 @@ After collecting feedback from testnet users, the following iteration was comple
 
 ## Acknowledgments
 
-- [Rise In](https://www.risein.com/programs) — Stellar Smart Contract Bootcamp
-- [Stellar Philippines](https://stellar.org/) — Stellar PH Bootcamp 2026
-- [Workflow PH](https://www.facebook.com/WorkFlowPH/) — Community partner
+- [Rise In](https://www.risein.com/programs)  - Stellar Smart Contract Bootcamp
+- [Stellar Philippines](https://stellar.org/)  - Stellar PH Bootcamp 2026
+- [Workflow PH](https://www.facebook.com/WorkFlowPH/)  - Community partner
 - [Stellar Docs](https://developers.stellar.org) · [Soroban SDK](https://docs.rs/soroban-sdk) · [Freighter](https://www.freighter.app/) · [Stellar Expert](https://stellar.expert/explorer/testnet)
 
 ---
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License  - see [LICENSE](LICENSE) for details.

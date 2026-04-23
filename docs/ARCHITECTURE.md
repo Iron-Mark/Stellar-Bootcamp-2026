@@ -1,4 +1,4 @@
-# Stellaroid Earn — Architecture Document
+# Stellaroid Earn  - Architecture Document
 
 ## System Overview
 
@@ -53,7 +53,7 @@ Stellaroid Earn is an on-chain credential trust platform built on Stellar testne
 │  │  └──────────────────────────────────┘  │              │
 │  └────────────────────────────────────────┘              │
 │  ┌────────────────────────────────────────┐              │
-│  │  XLM (SAC) — Native Asset Contract    │              │
+│  │  XLM (SAC)  - Native Asset Contract    │              │
 │  └────────────────────────────────────────┘              │
 └──────────────────────────────────────────────────────────┘
 ```
@@ -65,13 +65,13 @@ Stellaroid Earn is an on-chain credential trust platform built on Stellar testne
 **Language:** Rust (soroban-sdk 22.0.0)
 **Target:** `wasm32v1-none`
 **Storage model:**
-- **Persistent storage** — Issuer records, certificate records, payment links (TTL: 518,400 ledgers min / 1,036,800 max)
-- **Instance storage** — Admin address, XLM token contract address
+- **Persistent storage**  - Issuer records, certificate records, payment links (TTL: 518,400 ledgers min / 1,036,800 max)
+- **Instance storage**  - Admin address, XLM token contract address
 
 **Key data structures:**
-- `IssuerRecord` — name, website, category, status (Pending/Approved/Suspended)
-- `CertificateRecord` — issuer, student, title, cohort, metadata_uri, status, timestamps
-- `PaymentRecord` — payer, amount, linked certificate hash
+- `IssuerRecord`  - name, website, category, status (Pending/Approved/Suspended)
+- `CertificateRecord`  - issuer, student, title, cohort, metadata_uri, status, timestamps
+- `PaymentRecord`  - payer, amount, linked certificate hash
 
 **Access control:**
 - Admin-only: `init`, `approve_issuer`, `suspend_issuer`, `reward_student`
@@ -133,8 +133,8 @@ Anyone opens /proof/<hash> → Next.js RSC calls simulateTransaction
 | Decision | Rationale |
 |---|---|
 | Soroban over classic Stellar | Need custom logic (issuer trust layer, credential lifecycle states) that classic offers/payments can't express |
-| `simulateTransaction` for reads | Avoids requiring a wallet for public proof verification — critical for employer adoption |
+| `simulateTransaction` for reads | Avoids requiring a wallet for public proof verification  - critical for employer adoption |
 | Next.js App Router + RSC | Server-side rendering of proof pages enables SEO, link previews, and CDN caching |
-| XLM via SAC (not custom token) | Reduces friction — graduates receive actual XLM, no need to trust-line a custom asset |
+| XLM via SAC (not custom token) | Reduces friction  - graduates receive actual XLM, no need to trust-line a custom asset |
 | Persistent storage with long TTLs | Credentials should outlive short-term contract state; 518k–1M ledger TTLs provide months of persistence |
 | Typed `#[contracterror]` | Provides clear, actionable errors instead of opaque integer codes |

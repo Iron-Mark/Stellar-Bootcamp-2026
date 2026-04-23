@@ -1,4 +1,4 @@
-# Security Checklist — Stellaroid Earn
+# Security Checklist  - Stellaroid Earn
 
 This document records the security controls verified for the Stellaroid Earn MVP
 (testnet deployment, Black Belt submission). Items are checked at the
@@ -33,7 +33,7 @@ smart-contract, frontend, infrastructure, and operational layers.
 | 3 | **X-Frame-Options** | PASS | `DENY` globally; `/proof/[hash]/embed` route permits controlled framing for embed use-case. |
 | 4 | **HSTS** | PASS | `max-age=63072000; includeSubDomains; preload` on all routes. |
 | 5 | **Referrer-Policy** | PASS | `strict-origin-when-cross-origin` applied via `next.config.ts` headers. |
-| 6 | **Permissions-Policy** | PASS | `camera=(), microphone=(), geolocation=()` — no sensitive device APIs exposed. |
+| 6 | **Permissions-Policy** | PASS | `camera=(), microphone=(), geolocation=()`  - no sensitive device APIs exposed. |
 | 7 | **Input validation** | PASS | Proof hash format is validated client-side before any RPC call is issued; malformed hashes are rejected early. |
 | 8 | **Error normalization** | PASS | `humanizeError()` maps all contract and network errors to safe, non-leaking copy. |
 | 9 | **SSRF prevention** | PASS | `isSafeUri()` blocks `file://`, `localhost`, and private IP ranges from being used as RPC targets. |
@@ -70,10 +70,10 @@ smart-contract, frontend, infrastructure, and operational layers.
 The following controls are standard for production deployments but are explicitly
 out of scope for this testnet MVP submission:
 
-- **Formal third-party audit** — not applicable at this stage; planned before any mainnet deployment.
-- **Rate limiting** — no custom backend to enforce it; Vercel edge and Stellar RPC provide baseline protection.
-- **Web Application Firewall (WAF)** — not configured; deferred to production.
-- **Penetration testing** — not performed; deferred to production.
+- **Formal third-party audit**  - not applicable at this stage; planned before any mainnet deployment.
+- **Rate limiting**  - no custom backend to enforce it; Vercel edge and Stellar RPC provide baseline protection.
+- **Web Application Firewall (WAF)**  - not configured; deferred to production.
+- **Penetration testing**  - not performed; deferred to production.
 
 ---
 
