@@ -18,6 +18,7 @@ import {
   hasRequiredConfig,
 } from "@/lib/config";
 import { DEFAULT_SAMPLE_PROOF_HASH } from "@/lib/demo-data";
+import { isFeeSponsorAvailable, requestFeeBump } from "@/lib/fee-bump";
 import { signWithFreighter } from "@/lib/freighter";
 import type {
   CertificateStatus,
@@ -368,8 +369,19 @@ async function signAndSubmit<T>(
     preparedTransaction.toXDR(),
     sourceAddress,
   );
+
+  // Fee bump: if a sponsor is configured, wrap the signed tx so sponsor pays gas.
+  let submissionXdr = signedXdr;
+  if (isFeeSponsorAvailable()) {
+    try {
+      submissionXdr = await requestFeeBump(signedXdr);
+    } catch {
+      // Sponsor unavailable — fall back to user-paid fees silently.
+    }
+  }
+
   const signedTransaction = TransactionBuilder.fromXDR(
-    signedXdr,
+    submissionXdr,
     getExpectedNetworkPassphrase(),
   );
 
