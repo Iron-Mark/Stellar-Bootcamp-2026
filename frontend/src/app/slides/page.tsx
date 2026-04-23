@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import type { Metadata } from "next";
 import Image from "next/image";
 
 /* ------------------------------------------------------------------ */
@@ -173,7 +172,6 @@ export default function SlidesPage() {
   return (
     <>
       {/* Override page title via document.title since this is a client component */}
-      <title>Demo Day | Stellaroid Earn</title>
 
       <div className="h-screen w-screen relative overflow-hidden">
         {/* ============================================================ */}

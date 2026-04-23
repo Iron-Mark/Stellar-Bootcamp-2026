@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
 import { ActivitySnackbar } from "@/components/activity/activity-snackbar";
@@ -972,7 +973,7 @@ export default function About() {
                       rel="noreferrer"
                       className="text-[13px] text-primary no-underline hover:underline"
                     >
-                      stellar.expert ↗
+                      stellar.expert <ExternalLink className="inline w-3 h-3 ml-1" />
                     </a>
                   </dd>
                 </div>
@@ -987,7 +988,7 @@ export default function About() {
                       rel="noreferrer"
                       className="text-[13px] text-primary no-underline hover:underline"
                     >
-                      GitHub ↗
+                      GitHub <ExternalLink className="inline w-3 h-3 ml-1" />
                     </a>
                     <a
                       href="https://github.com/Iron-Mark/Stellar-Bootcamp-2026/tree/main/contract"
@@ -995,7 +996,7 @@ export default function About() {
                       rel="noreferrer"
                       className="text-[13px] text-primary no-underline hover:underline"
                     >
-                      Contract crate ↗
+                      Contract crate <ExternalLink className="inline w-3 h-3 ml-1" />
                     </a>
                   </dd>
                 </div>

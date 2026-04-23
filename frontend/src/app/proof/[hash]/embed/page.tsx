@@ -5,6 +5,7 @@ export const revalidate = 60;
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import {
   getCertificateServer,
   CertificateRecord,
@@ -227,7 +228,7 @@ export default async function EmbedProof({ params }: PageProps) {
           target="_top"
           style={{ color: "#F59E0B", textDecoration: "none", fontWeight: 600 }}
         >
-          View full Verified Badge ↗
+          View full Verified Badge <ExternalLink style={{ display: "inline", width: 12, height: 12, marginLeft: 4, verticalAlign: "middle" }} />
         </Link>
         <a
           href={explorerUrl}
@@ -235,7 +236,7 @@ export default async function EmbedProof({ params }: PageProps) {
           rel="noopener noreferrer"
           style={{ color: "#8B5CF6", textDecoration: "none" }}
         >
-          stellar.expert ↗
+          stellar.expert <ExternalLink style={{ display: "inline", width: 12, height: 12, marginLeft: 4, verticalAlign: "middle" }} />
         </a>
       </div>
     </div>

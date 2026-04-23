@@ -1,3 +1,4 @@
+import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { appConfig } from "@/lib/config";
 import {
@@ -72,7 +73,7 @@ export async function RecentActivity({
           </div>
           {contractEventsUrl && (
             <a href={contractEventsUrl} target="_blank" rel="noreferrer" className={viewAllClass}>
-              View all ↗
+              View all <ExternalLink className="inline w-3 h-3 ml-1" />
             </a>
           )}
         </div>
@@ -106,7 +107,7 @@ export async function RecentActivity({
         </div>
         {contractEventsUrl && (
           <a href={contractEventsUrl} target="_blank" rel="noreferrer" className={viewAllClass}>
-            View all ↗
+            View all <ExternalLink className="inline w-3 h-3 ml-1" />
           </a>
         )}
       </div>

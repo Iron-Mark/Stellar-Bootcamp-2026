@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { ExternalLink } from "lucide-react";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -44,7 +45,7 @@ export function AppShell({ children, rpcPill, walletButton, sidebarMode }: AppSh
             rel="noopener noreferrer"
             className="text-accent hover:text-text no-underline text-[13px] inline-flex items-center gap-0.5 transition-colors focus-visible:outline-primary rounded-sm"
           >
-            stellar.expert ↗
+            stellar.expert <ExternalLink className="inline w-3 h-3 ml-1" />
           </a>
           {rpcPill}
           <span className="ml-auto" />

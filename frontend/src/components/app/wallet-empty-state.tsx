@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { DEFAULT_SAMPLE_PROOF_HASH } from "@/lib/demo-data";
 
 interface WalletEmptyStateProps {
@@ -45,7 +46,7 @@ export function WalletEmptyState({ mode }: WalletEmptyStateProps) {
             rel="noreferrer"
             className="inline-flex items-center justify-center min-h-[42px] px-4 rounded-md font-semibold no-underline bg-primary text-on-primary border border-primary hover:bg-primary-hover hover:text-on-primary"
           >
-            Get Freighter ↗
+            Get Freighter <ExternalLink className="inline w-3 h-3 ml-1" />
           </a>
         )}
         <Link

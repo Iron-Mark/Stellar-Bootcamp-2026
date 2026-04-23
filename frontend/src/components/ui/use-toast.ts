@@ -2,13 +2,13 @@
 // Sonner-backed shim. Keeps the old { toast } = useToast() API working.
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, type ReactNode } from "react";
 import { toast as sonnerToast } from "sonner";
 
 export type ToastTone = "success" | "danger" | "warning" | "neutral";
 
 export interface ToastAction {
-  label: string;
+  label: ReactNode;
   href?: string;
   onClick?: () => void;
 }

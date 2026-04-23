@@ -13,7 +13,7 @@ import { appConfig } from "@/lib/config";
 import { humanizeError } from "@/lib/errors";
 import { withTimeout } from "@/lib/with-timeout";
 import { getAllIssuers } from "@/lib/issuer-registry";
-import { Loader2 } from "lucide-react";
+import { ExternalLink, Loader2 } from "lucide-react";
 import type { IssuerRecord } from "@/lib/types";
 
 const knownIssuers = getAllIssuers();
@@ -131,7 +131,7 @@ export function IssuerDashboard() {
         tone: "success",
         action: result?.hash
           ? {
-              label: "View on stellar.expert ↗",
+              label: <>View on stellar.expert <ExternalLink className="inline w-3 h-3 ml-1" /></>,
               href: `${appConfig.explorerUrl}/tx/${result.hash}`,
             }
           : undefined,

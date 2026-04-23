@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
 
@@ -96,7 +97,7 @@ export default function Landing() {
             <dt className="text-text-muted">Contract</dt>
             <dd className="m-0 font-mono text-[13px]">
               <a href={contractUrl} target="_blank" rel="noreferrer" className="text-primary hover:underline">
-                {contractShort} ↗
+                {contractShort} <ExternalLink className="inline w-3 h-3 ml-1" />
               </a>
             </dd>
             <dt className="text-text-muted">Network</dt>

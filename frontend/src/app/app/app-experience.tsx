@@ -17,6 +17,7 @@ import { CopyButton } from "@/components/ui";
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
 import { FreighterWelcome } from "@/components/onboarding/freighter-welcome";
 import { DemoAutofillButton } from "@/components/demo/demo-autofill-button";
+import { ExternalLink } from "lucide-react";
 import { useFreighterWallet } from "@/hooks/use-freighter-wallet";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
@@ -216,7 +217,7 @@ export function AppExperience({ sidebarActivity }: AppExperienceProps) {
                             rel="noopener noreferrer"
                             className="text-primary hover:text-primary-hover hover:underline no-underline text-[13px] inline-flex items-center gap-0.5 transition-colors"
                           >
-                            stellar.expert ↗
+                            stellar.expert <ExternalLink className="inline w-3 h-3 ml-1" />
                           </a>
                         }
                       />

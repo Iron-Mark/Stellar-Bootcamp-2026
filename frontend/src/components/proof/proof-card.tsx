@@ -1,6 +1,6 @@
 // Server component — no "use client"
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Check, ExternalLink } from "lucide-react";
 import { CertificateRecord } from "@/lib/contract-client";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
@@ -258,7 +258,7 @@ export function ProofCard({
                 className="text-[0.8125rem] text-accent no-underline whitespace-nowrap hover:opacity-80 hover:underline transition-opacity"
                 aria-label="View on-chain events in explorer"
               >
-                View on-chain events ↗
+                View on-chain events <ExternalLink className="inline w-3 h-3 ml-1" />
               </a>
               <CopyButton value={hash} ariaLabel="Copy certificate hash" />
               <span className="text-[0.8125rem] text-text-muted">
@@ -291,7 +291,7 @@ export function ProofCard({
                   className="text-[0.8125rem] text-accent no-underline whitespace-nowrap hover:opacity-80 hover:underline transition-opacity"
                   aria-label="View contract on explorer"
                 >
-                  View on explorer ↗
+                  View on explorer <ExternalLink className="inline w-3 h-3 ml-1" />
                 </a>
               </div>
               <div className="flex items-center gap-2 flex-wrap">

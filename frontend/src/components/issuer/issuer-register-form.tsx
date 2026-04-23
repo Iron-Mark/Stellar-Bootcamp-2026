@@ -9,6 +9,7 @@ import { appConfig, hasRequiredConfig } from "@/lib/config";
 import { registerIssuer } from "@/lib/contract-client";
 import { humanizeError } from "@/lib/errors";
 import { withTimeout } from "@/lib/with-timeout";
+import { ExternalLink } from "lucide-react";
 
 const CATEGORIES = [
   { value: "bootcamp", label: "Bootcamp" },
@@ -76,7 +77,7 @@ export function IssuerRegisterForm() {
         tone: "success",
         action: result?.hash
           ? {
-              label: "View on stellar.expert ↗",
+              label: <>View on stellar.expert <ExternalLink className="inline w-3 h-3 ml-1" /></>,
               href: `${appConfig.explorerUrl}/tx/${result.hash}`,
             }
           : undefined,

@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Metrics",
-  description: "On-chain activity metrics for Stellaroid Earn",
+  description: "Live on-chain activity metrics for Stellaroid Earn - events, proofs, transactions, and payment stats from Stellar testnet.",
+  alternates: { canonical: "/metrics" },
 };
 
 export const revalidate = 30;

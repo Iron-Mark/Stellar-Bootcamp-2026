@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ExternalLink } from "lucide-react";
 import type { ProofMetadata } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 
@@ -74,7 +75,7 @@ export function CredentialMetadataPanel({
                   rel="noopener noreferrer"
                   className="text-sm text-accent no-underline hover:underline"
                 >
-                  {item.label} ↗
+                  {item.label} <ExternalLink className="inline w-3 h-3 ml-1" />
                 </a>
               ) : (
                 <Link
