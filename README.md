@@ -295,10 +295,11 @@ stellaroid-earn/
 
 ## Demo Video
 
-<!-- TODO: Replace with your actual demo video link -->
-[![Demo Video](https://img.shields.io/badge/Demo_Video-Watch_on_Loom-625DF5?style=for-the-badge&logo=loom&logoColor=white)](<!-- TODO: Replace with Loom/YouTube link -->)
+https://github.com/user-attachments/assets/stellaroid-earn-demo.mp4
 
-> Full walkthrough: connect wallet → register issuer → issue credential → verify on-chain → employer pays graduate in XLM → public proof page.
+> Full walkthrough: landing page → about → app dashboard (wallet connect) → issuer console → verified proof page → on-chain evidence on Stellar Expert.
+
+Local copy: [`demo/stellaroid-earn-demo.mp4`](demo/stellaroid-earn-demo.mp4)
 
 ---
 
