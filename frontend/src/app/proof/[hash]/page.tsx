@@ -36,17 +36,19 @@ export async function generateMetadata({
   const title = `Proof of Work · ${short}`;
   const description =
     "Verified, on-chain proof of completed work. Anchored on Stellar with SHA-256. Paid atomically on verification.";
+  const proofUrl = `${BASE_URL}/proof/${hash}`;
 
   return {
     title,
     description,
     alternates: {
-      canonical: `${BASE_URL}/proof/${hash}`,
+      canonical: proofUrl,
     },
     openGraph: {
       title,
       description,
       type: "article",
+      url: proofUrl,
     },
     twitter: {
       card: "summary_large_image",
