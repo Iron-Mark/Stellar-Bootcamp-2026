@@ -26,5 +26,3 @@ export { Toaster as ToastProvider } from "sonner";
 export { toast } from "sonner";
 export { useToast } from "./use-toast";
 export type { ToastTone, ToastInput, ToastAction } from "./use-toast";
-
-export { JsonLd } from "./json-ld";

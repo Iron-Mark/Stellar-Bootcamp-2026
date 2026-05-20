@@ -11,6 +11,7 @@ import {
   getIssuerServer,
 } from "@/lib/contract-read-server";
 import { getProofMetadataForCertificate } from "@/lib/proof-metadata";
+import { getProofSocialMetadata } from "@/lib/proof-claims";
 import type { IssuerRecord } from "@/lib/types";
 import { ProofCard } from "@/components/proof/proof-card";
 import { SiteNav } from "@/components/layout/site-nav";
@@ -31,12 +32,16 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { hash } = await params;
-  const short =
-    hash.length > 16 ? `${hash.slice(0, 10)}…${hash.slice(-10)}` : hash;
-  const title = `Proof of Work · ${short}`;
-  const description =
-    "Verified, on-chain proof of completed work. Anchored on Stellar with SHA-256. Paid atomically on verification.";
   const proofUrl = `${BASE_URL}/proof/${hash}`;
+  let cert: CertificateRecord | null = null;
+  if (HASH_RE.test(hash)) {
+    try {
+      cert = await getCertificateServer(hash);
+    } catch {
+      cert = null;
+    }
+  }
+  const { title, description } = getProofSocialMetadata(hash, cert);
 
   return {
     title,

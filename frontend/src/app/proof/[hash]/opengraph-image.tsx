@@ -1,6 +1,11 @@
 import { ImageResponse } from "next/og";
+import {
+  getCertificateServer,
+  type CertificateRecord,
+} from "@/lib/contract-read-server";
+import { getProofSocialMetadata, proofCanMakeVerifiedClaims } from "@/lib/proof-claims";
 
-export const alt = "Stellaroid Earn | Verified Badge";
+export const alt = "Stellaroid Earn | Proof status";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,6 +21,16 @@ function shortHash(hash: string) {
 export default async function OpengraphImage({ params }: Props) {
   const { hash } = await params;
   const display = shortHash(hash);
+  let cert: CertificateRecord | null = null;
+  if (/^[0-9a-f]{64}$/i.test(hash)) {
+    try {
+      cert = await getCertificateServer(hash);
+    } catch {
+      cert = null;
+    }
+  }
+  const verified = proofCanMakeVerifiedClaims(cert);
+  const social = getProofSocialMetadata(hash, cert);
 
   return new ImageResponse(
     <div
@@ -133,7 +148,7 @@ export default async function OpengraphImage({ params }: Props) {
             fontWeight: 500,
           }}
         >
-          Verified Proof of Work
+          {verified ? "Verified Proof of Work" : "Proof Status"}
         </div>
         <div
           style={{
@@ -146,9 +161,9 @@ export default async function OpengraphImage({ params }: Props) {
             flexDirection: "column",
           }}
         >
-          Work completed.
+          {verified ? "Work completed." : "Check status."}
           <br />
-          Payment settled.
+          {verified ? "Payment settled." : cert ? cert.status.toUpperCase() : "NOT FOUND"}
         </div>
       </div>
 
@@ -214,7 +229,7 @@ export default async function OpengraphImage({ params }: Props) {
             background: "#10B981",
           }}
         />
-        ON-CHAIN · TESTNET
+        {verified ? "VERIFIED · TESTNET" : social.title.toUpperCase()}
       </div>
     </div>,
     { ...size },

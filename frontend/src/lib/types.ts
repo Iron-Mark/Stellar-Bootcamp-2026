@@ -71,3 +71,5 @@ export type OpportunityRecord = {
   milestoneCount: number;
   currentMilestone: number;
 };
+
+export const MAX_OPPORTUNITY_MILESTONES = 24;

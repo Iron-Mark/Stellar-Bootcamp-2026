@@ -8,7 +8,7 @@ import { humanizeError } from "@/lib/errors";
 import { withTimeout } from "@/lib/with-timeout";
 import { linkPayment } from "@/lib/contract-client";
 import { appConfig, hasRequiredConfig } from "@/lib/config";
-import { parseAmountToInt } from "@/lib/format";
+import { isValidDecimalAmount, parseAmountToInt } from "@/lib/format";
 import { useFreighterWallet } from "@/hooks/use-freighter-wallet";
 
 export interface PayFormProps {
@@ -27,8 +27,7 @@ function isValidHash(hash: string): boolean {
 }
 
 function isValidAmount(amount: string): boolean {
-  const n = Number(amount.trim());
-  return Number.isFinite(n) && n > 0;
+  return isValidDecimalAmount(amount, appConfig.assetDecimals);
 }
 
 export function PayForm({ initialHash, initialStudent, onPaid }: PayFormProps) {

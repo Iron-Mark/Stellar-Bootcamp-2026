@@ -1,5 +1,13 @@
 export function parseAmountToInt(amount: string, decimals: number): bigint {
-  const [wholePart, fractionPart = ""] = amount.trim().split(".");
+  if (!Number.isInteger(decimals) || decimals < 0 || decimals > 18) {
+    throw new Error("Invalid asset decimal configuration.");
+  }
+  const trimmed = amount.trim();
+  const match = /^(\d+)(?:\.(\d+))?$/.exec(trimmed);
+  if (!match) {
+    throw new Error("Enter a valid unsigned decimal amount.");
+  }
+  const [, wholePart, fractionPart = ""] = match;
   if (fractionPart.length > decimals) {
     throw new Error(`Use at most ${decimals} decimal places for this asset.`);
   }
@@ -9,6 +17,15 @@ export function parseAmountToInt(amount: string, decimals: number): bigint {
   const result = whole * 10n ** BigInt(decimals) + fraction;
   if (result <= 0n) throw new Error("Amount must be greater than zero.");
   return result;
+}
+
+export function isValidDecimalAmount(amount: string, decimals: number): boolean {
+  try {
+    parseAmountToInt(amount, decimals);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function formatAmount(value: bigint, decimals: number): string {

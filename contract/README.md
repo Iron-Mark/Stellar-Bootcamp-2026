@@ -111,8 +111,8 @@ https://stellar.expert/explorer/testnet/contract/<CONTRACT_ID>
 
 - **Pitch:** Trusted issuers verify a Philippine bootcamp credential and employers can pay the grad in one flow — on Stellar testnet.
 - **Live demo:** https://stellaroid-earn-demo.vercel.app/
-- **Contract ID (current):** `CBNSOFNXAOIFFKCOZLT7UZ5EEPB3ML2DP4YUGF24M4VBJCUWEHI2DX2Y`
-  → https://stellar.expert/explorer/testnet/contract/CBNSOFNXAOIFFKCOZLT7UZ5EEPB3ML2DP4YUGF24M4VBJCUWEHI2DX2Y
+- **Contract ID (current public baseline):** `CA7P5EPYKC2IW4PCMAH6NRBLHH3WP7AN6WWC3QDRWO4HLE47FAGO6TET`
+  → https://stellar.expert/explorer/testnet/contract/CA7P5EPYKC2IW4PCMAH6NRBLHH3WP7AN6WWC3QDRWO4HLE47FAGO6TET
 - **Contract ID (stable v1):** `CDWCARXLJUJ5ISC3GPXRLR5HC6QPLMGULCVRIACYKQM4U5AG7TFWXHVZ`
   → https://stellar.expert/explorer/testnet/contract/CDWCARXLJUJ5ISC3GPXRLR5HC6QPLMGULCVRIACYKQM4U5AG7TFWXHVZ
 - **Reward token (native XLM SAC):** `CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC`
@@ -127,7 +127,7 @@ https://stellar.expert/explorer/testnet/contract/<CONTRACT_ID>
   - [x] Full register → verify → pay flow executed end to end on testnet (tx hashes above)
   - [x] `cert_reg` + `payment` events visible in explorer
   - [x] No raw ScVal / HostError surfaces (mapped in `frontend/src/lib/contract-client.ts` `normalizeError`)
-- **Current repo note:** trust-layer tests are included in `contract/src/test.rs`, but rerun `cargo test` locally after installing Rust/stellar-cli before treating the new ABI as release-ready.
+- **Current repo note:** trust-layer and opportunity escrow tests are included in `contract/src/test.rs`, but this security hardening changes the contract ABI and requires a fresh testnet redeploy before the deployed app is fully aligned.
 
 ## License
 

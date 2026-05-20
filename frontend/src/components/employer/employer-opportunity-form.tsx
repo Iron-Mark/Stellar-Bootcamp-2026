@@ -12,6 +12,8 @@ import {
 } from "@/lib/contract-client";
 import type { CertificateRecord } from "@/lib/contract-client";
 import { humanizeError } from "@/lib/errors";
+import { isValidDecimalAmount, parseAmountToInt } from "@/lib/format";
+import { MAX_OPPORTUNITY_MILESTONES } from "@/lib/types";
 import { withTimeout } from "@/lib/with-timeout";
 import { ExternalLink } from "lucide-react";
 
@@ -67,14 +69,15 @@ export function EmployerOpportunityForm({
     if (!wallet.address || !cert) return;
     setSubmitting(true);
     try {
+      const milestoneCount = Number.parseInt(milestones.trim(), 10);
       const result = await withTimeout(
         createOpportunity(
           wallet.address,
           cert.owner,
           certHash.trim(),
           title.trim() || "Paid trial",
-          BigInt(Math.round(parseFloat(amount) * 1e7)),
-          parseInt(milestones) || 1,
+          parseAmountToInt(amount, appConfig.assetDecimals),
+          milestoneCount,
         ),
         15000,
         "create opportunity",
@@ -132,14 +135,20 @@ export function EmployerOpportunityForm({
     }
   }
 
-  const parsedAmount = parseFloat(amount);
+  const parsedMilestones = Number.parseInt(milestones.trim(), 10);
+  const validMilestoneCount =
+    Number.isInteger(parsedMilestones) &&
+    String(parsedMilestones) === milestones.trim() &&
+    parsedMilestones >= 1 &&
+    parsedMilestones <= MAX_OPPORTUNITY_MILESTONES;
   const canCreate =
     hasRequiredConfig() &&
     walletConnected &&
     cert &&
     cert.status === "verified" &&
     !submitting &&
-    parsedAmount > 0;
+    isValidDecimalAmount(amount, appConfig.assetDecimals) &&
+    validMilestoneCount;
 
   return (
     <div className="flex flex-col gap-5">
@@ -217,7 +226,7 @@ export function EmployerOpportunityForm({
             value={milestones}
             onChange={(e) => setMilestones(e.target.value)}
             placeholder="1"
-            helper="Candidate submits each milestone for your approval before release."
+            helper={`Use 1-${MAX_OPPORTUNITY_MILESTONES} milestones. Candidate submits each milestone for your approval before release.`}
           />
           <div className="flex gap-3 flex-wrap">
             <Button

@@ -27,6 +27,7 @@ import type {
   OpportunityRecord,
   OpportunityStatus,
 } from "@/lib/types";
+import { MAX_OPPORTUNITY_MILESTONES as MAX_MILESTONES } from "@/lib/types";
 
 const FALLBACK_SIMULATION_SOURCE =
   "GBAKLRUJEOZGWKSHJFFWJ4DINXQZEJBT7JQTR5T4GATQU2SNO4ZFHZQ4";
@@ -84,7 +85,7 @@ function getReadAddress() {
 
 type ContractArg =
   | { value: string; type: "address" | "string" }
-  | { value: bigint | number; type: "i128" | "u32" }
+  | { value: bigint | number; type: "i128" | "u32" | "u64" }
   | { value: Uint8Array; type: "bytes32" };
 
 function hexToBytes32(hex: string): Uint8Array {
@@ -706,8 +707,14 @@ function normalizeOpportunity(value: unknown): OpportunityRecord | null {
     title: normalizeString(record.title),
     amount: normalizeBigInt(record.amount),
     status: normalizeOpportunityStatus(record.status),
-    milestoneCount: Number(normalizeBigInt(record.milestone_count)),
-    currentMilestone: Number(normalizeBigInt(record.current_milestone)),
+    milestoneCount: Math.min(
+      Number(normalizeBigInt(record.milestone_count)),
+      MAX_MILESTONES,
+    ),
+    currentMilestone: Math.min(
+      Number(normalizeBigInt(record.current_milestone)),
+      MAX_MILESTONES,
+    ),
   };
 }
 
@@ -938,7 +945,7 @@ export async function fundOpportunity(employer: string, oppId: number) {
     "fund_opportunity",
     buildArgs([
       { value: employer, type: "address" },
-      { value: BigInt(oppId), type: "u32" },
+      { value: BigInt(oppId), type: "u64" },
     ]),
   );
 }
@@ -949,7 +956,7 @@ export async function submitMilestone(candidate: string, oppId: number) {
     "submit_milestone",
     buildArgs([
       { value: candidate, type: "address" },
-      { value: BigInt(oppId), type: "u32" },
+      { value: BigInt(oppId), type: "u64" },
     ]),
   );
 }
@@ -960,7 +967,7 @@ export async function approveMilestone(employer: string, oppId: number) {
     "approve_milestone",
     buildArgs([
       { value: employer, type: "address" },
-      { value: BigInt(oppId), type: "u32" },
+      { value: BigInt(oppId), type: "u64" },
     ]),
   );
 }
@@ -971,7 +978,7 @@ export async function releasePayment(employer: string, oppId: number) {
     "release_payment",
     buildArgs([
       { value: employer, type: "address" },
-      { value: BigInt(oppId), type: "u32" },
+      { value: BigInt(oppId), type: "u64" },
     ]),
   );
 }
@@ -982,7 +989,7 @@ export async function refundOpportunity(employer: string, oppId: number) {
     "refund_opportunity",
     buildArgs([
       { value: employer, type: "address" },
-      { value: BigInt(oppId), type: "u32" },
+      { value: BigInt(oppId), type: "u64" },
     ]),
   );
 }
@@ -991,7 +998,7 @@ export async function getOpportunity(oppId: number) {
   return simulateRead(
     getReadAddress(),
     "get_opportunity",
-    buildArgs([{ value: BigInt(oppId), type: "u32" }]),
+    buildArgs([{ value: BigInt(oppId), type: "u64" }]),
     normalizeOpportunity,
   );
 }

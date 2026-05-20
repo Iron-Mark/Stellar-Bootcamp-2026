@@ -114,6 +114,7 @@ pub enum Error {
 // ~30d / ~60d in testnet ledgers — keeps certificates alive through a bootcamp demo window.
 const TTL_THRESHOLD: u32 = 518_400;
 const TTL_EXTEND: u32 = 1_036_800;
+const MAX_MILESTONE_COUNT: u32 = 24;
 
 #[contract]
 pub struct StellaroidEarn;
@@ -404,6 +405,11 @@ impl StellaroidEarn {
             _ => return Err(Error::InvalidStatus),
         }
 
+        let normalized_milestone_count = if milestone_count == 0 { 1 } else { milestone_count };
+        if normalized_milestone_count > MAX_MILESTONE_COUNT {
+            return Err(Error::InvalidMilestone);
+        }
+
         let id = next_opportunity_id(&env);
         let opp = Opportunity {
             id,
@@ -413,7 +419,7 @@ impl StellaroidEarn {
             title,
             amount,
             status: OpportunityStatus::Draft,
-            milestone_count: if milestone_count == 0 { 1 } else { milestone_count },
+            milestone_count: normalized_milestone_count,
             current_milestone: 0,
         };
         let key = DataKey::Opportunity(id);
@@ -565,7 +571,8 @@ impl StellaroidEarn {
         Ok(())
     }
 
-    /// Employer reclaims escrowed funds. Only allowed from Funded or InProgress status.
+    /// Employer reclaims escrowed funds. Submitted work can still be rejected by
+    /// refunding so a candidate cannot lock escrow by submitting unacceptable work.
     pub fn refund_opportunity(env: Env, employer: Address, opp_id: u64) -> Result<(), Error> {
         employer.require_auth();
 
@@ -579,7 +586,7 @@ impl StellaroidEarn {
             return Err(Error::Unauthorized);
         }
         match opp.status {
-            OpportunityStatus::Funded | OpportunityStatus::InProgress => {}
+            OpportunityStatus::Funded | OpportunityStatus::InProgress | OpportunityStatus::Submitted => {}
             _ => return Err(Error::InvalidOpportunityStatus),
         }
 

@@ -78,7 +78,7 @@ Stellaroid Earn is an on-chain credential trust platform built on Stellar testne
 - Approved issuers: `register_certificate`, `verify_certificate`, `revoke_certificate`, `suspend_certificate`
 - Public: `register_issuer`, `link_payment`, `get_certificate`, `get_issuer`
 
-**Error handling:** Typed `#[contracterror]` enum with 12 variants covering all authorization and state failures.
+**Error handling:** Typed `#[contracterror]` enum with 17 variants covering authorization, credential lifecycle, opportunity escrow, and invalid state failures.
 
 ### 2. Frontend (`frontend/`)
 
@@ -93,7 +93,7 @@ Stellaroid Earn is an on-chain credential trust platform built on Stellar testne
 - All mutations route through Freighter: build tx → `signTransaction()` → `sendTransaction()` → poll `getTransaction()` until confirmed.
 
 **Security:**
-- CSP headers restrict `connect-src` to `*.stellar.org`
+- CSP headers restrict `connect-src` to `*.stellar.org` and production `script-src` avoids `unsafe-inline`
 - `X-Frame-Options: DENY` on all routes
 - `/proof/[hash]` validates hex format before any RPC call
 - HSTS, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`
@@ -138,3 +138,4 @@ Anyone opens /proof/<hash> → Next.js RSC calls simulateTransaction
 | XLM via SAC (not custom token) | Reduces friction  - graduates receive actual XLM, no need to trust-line a custom asset |
 | Persistent storage with long TTLs | Credentials should outlive short-term contract state; 518k–1M ledger TTLs provide months of persistence |
 | Typed `#[contracterror]` | Provides clear, actionable errors instead of opaque integer codes |
+| Fee sponsorship behind server auth | Prevents arbitrary public XDR from being sponsor-signed by requiring bearer authorization plus contract/method/fee validation |

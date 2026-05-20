@@ -1,8 +1,14 @@
-export function JsonLd({ data }: { data: Record<string, unknown> }) {
+import { headers } from "next/headers";
+import { serializeJsonLd } from "@/lib/json-ld-safe";
+
+export async function JsonLd({ data }: { data: Record<string, unknown> }) {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
+
   return (
     <script
+      nonce={nonce}
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }}
     />
   );
 }

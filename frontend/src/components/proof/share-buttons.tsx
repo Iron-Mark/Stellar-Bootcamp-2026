@@ -3,12 +3,15 @@
 import { useState, useEffect } from "react";
 import { Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getProofShareCopy } from "@/lib/proof-claims";
+import type { CertificateStatus } from "@/lib/types";
 
 interface ShareButtonsProps {
   hash: string;
+  status: CertificateStatus | null;
 }
 
-export function ShareButtons({ hash }: ShareButtonsProps) {
+export function ShareButtons({ hash, status }: ShareButtonsProps) {
   const [url, setUrl] = useState("");
   const [copied, setCopied] = useState(false);
 
@@ -18,22 +21,13 @@ export function ShareButtons({ hash }: ShareButtonsProps) {
     }
   }, []);
 
-  const tweetText = `I just got verified proof of work, on-chain, instantly settled on @StellarOrg. Sub-cent fees. 5-second finality. No platform take rate.
-
-Hash: ${hash}
-
-Proof: ${url}
-
-#Stellar #Soroban #ProofOfWork`;
+  const shareCopy = getProofShareCopy(hash, url, status ? { status } : null);
+  const tweetText = shareCopy.text;
   const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
 
-  const linkedInText = `I just got verified proof of work, anchored on-chain with SHA-256 and settled atomically on Stellar. No 30-day invoice wait. No 20% platform fee. Just a link anyone can verify.
+  const linkedInText = `${shareCopy.text}
 
-Hash: ${hash}
-
-${url}
-
-Built on Stellar + Soroban. #Stellar #Soroban #ProofOfWork #FreelanceEconomy`;
+Built on Stellar + Soroban. #Stellar #Soroban #ProofOfWork`;
   const linkedInUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(linkedInText)}`;
 
   function openInNewTab(href: string) {
@@ -58,7 +52,7 @@ Built on Stellar + Soroban. #Stellar #Soroban #ProofOfWork #FreelanceEconomy`;
         variant="secondary"
         size="sm"
         onClick={() => openInNewTab(tweetUrl)}
-        aria-label="Share on X (Twitter)"
+        aria-label={shareCopy.verified ? "Share verified proof on X (Twitter)" : "Share proof lookup on X (Twitter)"}
       >
         {/* X (Twitter) mark — brand SVG, no Lucide equivalent */}
         <svg
@@ -83,7 +77,7 @@ Built on Stellar + Soroban. #Stellar #Soroban #ProofOfWork #FreelanceEconomy`;
         variant="secondary"
         size="sm"
         onClick={() => openInNewTab(linkedInUrl)}
-        aria-label="Share on LinkedIn"
+        aria-label={shareCopy.verified ? "Share verified proof on LinkedIn" : "Share proof lookup on LinkedIn"}
       >
         {/* LinkedIn "in" mark — brand SVG, no Lucide equivalent */}
         <svg

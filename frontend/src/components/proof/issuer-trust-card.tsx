@@ -2,6 +2,7 @@ import { ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { CopyButton } from "@/components/ui/copy-button";
 import { shortenAddress } from "@/lib/format";
+import { isSafeExternalHttpUrl } from "@/lib/security";
 import type { IssuerRecord } from "@/lib/types";
 
 interface IssuerTrustCardProps {
@@ -21,6 +22,8 @@ function statusTone(status: IssuerRecord["status"]): "success" | "warning" | "da
 }
 
 export function IssuerTrustCard({ issuer }: IssuerTrustCardProps) {
+  const safeWebsite = isSafeExternalHttpUrl(issuer.website) ? issuer.website : "";
+
   return (
     <div className="rounded-lg border border-border bg-surface-2 px-4 py-3 flex flex-col gap-2">
       <div className="flex items-center justify-between gap-2 flex-wrap">
@@ -34,16 +37,20 @@ export function IssuerTrustCard({ issuer }: IssuerTrustCardProps) {
       <p className="text-sm font-semibold text-text">
         {issuer.name || "Unnamed issuer"}
       </p>
-      {issuer.website ? (
+      {safeWebsite ? (
         <a
-          href={issuer.website}
+          href={safeWebsite}
           target="_blank"
           rel="noopener noreferrer"
           className="text-[0.8125rem] text-accent no-underline hover:underline inline-flex items-center gap-1"
         >
-          {issuer.website.replace(/^https?:\/\//, "")}
+          {safeWebsite.replace(/^https?:\/\//, "")}
           <ExternalLink className="w-3 h-3" />
         </a>
+      ) : issuer.website ? (
+        <p className="text-[0.8125rem] text-text-muted break-all">
+          Website omitted because it is not an http(s) URL.
+        </p>
       ) : null}
       <div className="flex items-center gap-2 text-[0.8125rem] text-text-muted">
         <code className="font-mono text-text bg-bg border border-border rounded px-1.5 py-0.5 text-xs">

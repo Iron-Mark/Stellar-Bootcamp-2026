@@ -13,6 +13,7 @@ import {
   getExpectedNetworkPassphrase,
   hasRequiredConfig,
 } from "@/lib/config";
+import { DEFAULT_SAMPLE_PROOF_HASH } from "@/lib/demo-data";
 import type {
   CertificateStatus,
   IssuerRecord,
@@ -20,6 +21,7 @@ import type {
   OpportunityRecord,
   OpportunityStatus,
 } from "@/lib/types";
+import { MAX_OPPORTUNITY_MILESTONES } from "@/lib/types";
 
 const FALLBACK_SIMULATION_SOURCE =
   "GBAKLRUJEOZGWKSHJFFWJ4DINXQZEJBT7JQTR5T4GATQU2SNO4ZFHZQ4";
@@ -205,6 +207,9 @@ function buildSimulationTransaction(
 
 export async function getCertificateServer(certHashHex: string) {
   if (appConfig.e2eMode) {
+    if (certHashHex.trim().toLowerCase() !== DEFAULT_SAMPLE_PROOF_HASH.toLowerCase()) {
+      return null;
+    }
     return normalizeCertificate({
       owner: E2E_WALLET_ADDRESS,
       issuer: E2E_WALLET_ADDRESS,
@@ -334,8 +339,14 @@ function normalizeOpportunity(value: unknown): OpportunityRecord | null {
     title: normalizeString(record.title),
     amount: BigInt(normalizeTimestamp(record.amount)),
     status: normalizeOpportunityStatus(record.status),
-    milestoneCount: normalizeTimestamp(record.milestone_count),
-    currentMilestone: normalizeTimestamp(record.current_milestone),
+    milestoneCount: Math.min(
+      normalizeTimestamp(record.milestone_count),
+      MAX_OPPORTUNITY_MILESTONES,
+    ),
+    currentMilestone: Math.min(
+      normalizeTimestamp(record.current_milestone),
+      MAX_OPPORTUNITY_MILESTONES,
+    ),
   };
 }
 
@@ -343,7 +354,7 @@ export async function getOpportunityServer(oppId: number) {
   ensureConfigured();
   const server = getServer();
   const sourceAccount = new Account(getSimulationSourceAddress(), "0");
-  const args = [nativeToScVal(oppId, { type: "u32" })];
+  const args = [nativeToScVal(BigInt(oppId), { type: "u64" })];
 
   const transaction = new TransactionBuilder(sourceAccount, {
     fee: BASE_FEE,

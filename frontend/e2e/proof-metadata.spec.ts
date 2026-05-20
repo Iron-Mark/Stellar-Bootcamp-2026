@@ -34,3 +34,20 @@ test("proof Open Graph image renders as png", async ({ page, request }) => {
   expect(response.status()).toBe(200);
   expect(response.headers()["content-type"]).toContain("image/png");
 });
+
+test("unknown proof hashes do not get verified social claims", async ({ page }) => {
+  const unknown =
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+  await page.goto(`/proof/${unknown}`);
+
+  await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+    "content",
+    /Proof Lookup/,
+  );
+  await expect(page.locator('meta[property="og:description"]')).not.toHaveAttribute(
+    "content",
+    /Payment settled|Verified, on-chain proof/i,
+  );
+  await expect(page.getByText("No record for this hash yet.")).toBeVisible();
+});

@@ -1,6 +1,10 @@
 import { DEFAULT_SAMPLE_PROOF_HASH } from "@/lib/demo-data";
 import type { ProofMetadata } from "@/lib/types";
 import type { CertificateRecord } from "@/lib/contract-read-server";
+import {
+  isSafeExternalHttpUrl,
+  sanitizeProofMetadata,
+} from "@/lib/security";
 
 const PROOF_METADATA: Record<string, ProofMetadata> = {
   [DEFAULT_SAMPLE_PROOF_HASH.toLowerCase()]: {
@@ -39,48 +43,24 @@ export function getProofMetadata(hash: string): ProofMetadata | null {
   return PROOF_METADATA[key] ?? null;
 }
 
-// Only fetch from https:// URIs — prevents SSRF via file://, http://localhost, etc.
-function isSafeUri(uri: string): boolean {
-  try {
-    const url = new URL(uri.trim());
-    return url.protocol === "https:";
-  } catch {
-    return false;
-  }
-}
-
-function parseMetadataJson(json: unknown): ProofMetadata | null {
-  if (!json || typeof json !== "object") return null;
-  const obj = json as Record<string, unknown>;
-  const title = typeof obj.title === "string" ? obj.title.trim() : "";
-  if (!title) return null;
-  return {
-    title,
-    description: typeof obj.description === "string" ? obj.description : "",
-    cohort: typeof obj.cohort === "string" ? obj.cohort : undefined,
-    criteria: typeof obj.criteria === "string" ? obj.criteria : undefined,
-    skills: Array.isArray(obj.skills)
-      ? obj.skills.filter((s): s is string => typeof s === "string")
-      : [],
-    evidence: Array.isArray(obj.evidence)
-      ? obj.evidence.filter(
-          (e): e is { label: string; href: string } =>
-            typeof e === "object" &&
-            e !== null &&
-            typeof (e as Record<string, unknown>).label === "string" &&
-            typeof (e as Record<string, unknown>).href === "string",
-        )
-      : [],
-  };
-}
-
 async function fetchMetadataFromUri(uri: string): Promise<ProofMetadata | null> {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 3000);
   try {
-    const res = await fetch(uri, { next: { revalidate: 3600 } });
+    const res = await fetch(uri, {
+      next: { revalidate: 3600 },
+      signal: controller.signal,
+    });
     if (!res.ok) return null;
-    return parseMetadataJson(await res.json());
+    const length = Number(res.headers.get("content-length") ?? "0");
+    if (length > 64 * 1024) return null;
+    const text = await res.text();
+    if (text.length > 64 * 1024) return null;
+    return sanitizeProofMetadata(JSON.parse(text));
   } catch {
     return null;
+  } finally {
+    clearTimeout(timeout);
   }
 }
 
@@ -88,20 +68,19 @@ export async function getProofMetadataForCertificate(
   hash: string,
   cert: Pick<CertificateRecord, "title" | "cohort" | "metadataUri"> | null,
 ): Promise<ProofMetadata | null> {
+  if (!cert) return null;
+
   const fallback = getProofMetadata(hash);
-
-  if (!cert) return fallback;
-
   const uri = cert.metadataUri.trim();
 
   // Prefer live metadata fetched from the on-chain URI.
-  if (uri && isSafeUri(uri)) {
+  if (uri && isSafeExternalHttpUrl(uri)) {
     const remote = await fetchMetadataFromUri(uri);
     if (remote) return remote;
   }
 
   // Fall back: merge on-chain fields with the hardcoded demo map.
-  const contractEvidence = uri ? [{ label: "Metadata source", href: uri }] : [];
+  const contractEvidence = uri && isSafeExternalHttpUrl(uri) ? [{ label: "Metadata source", href: uri }] : [];
   const title = cert.title.trim() || fallback?.title;
   const description = fallback?.description;
 
@@ -109,7 +88,7 @@ export async function getProofMetadataForCertificate(
     return null;
   }
 
-  return {
+  return sanitizeProofMetadata({
     title: title ?? "On-chain credential",
     description:
       description ??
@@ -118,5 +97,5 @@ export async function getProofMetadataForCertificate(
     criteria: fallback?.criteria,
     skills: fallback?.skills ?? [],
     evidence: [...contractEvidence, ...(fallback?.evidence ?? [])],
-  };
+  });
 }

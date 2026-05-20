@@ -32,6 +32,7 @@ export async function getHealthReport(): Promise<HealthReport> {
           method: "getHealth",
           params: {},
         }),
+        next: { revalidate: 30 },
         signal: AbortSignal.timeout(5000),
       });
 

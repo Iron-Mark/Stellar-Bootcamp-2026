@@ -428,3 +428,64 @@ fn t10_invalid_status_transitions_fail() {
         .unwrap();
     assert_eq!(err, Error::InvalidOpportunityStatus);
 }
+
+// T11 — Opportunity milestone count is capped to prevent unbounded rendering and work.
+#[test]
+fn t11_rejects_too_many_opportunity_milestones() {
+    let ctx = setup();
+    ctx.env.mock_all_auths();
+    ctx.client.init(&ctx.admin, &ctx.token_addr);
+
+    let issuer = Address::generate(&ctx.env);
+    let student = Address::generate(&ctx.env);
+    let employer = Address::generate(&ctx.env);
+    let hash = BytesN::from_array(&ctx.env, &[11u8; 32]);
+
+    register_issuer(&ctx, &issuer);
+    approve_issuer(&ctx, &issuer);
+    register_certificate(&ctx, &issuer, &student, &hash);
+    ctx.client.verify_certificate(&issuer, &hash);
+
+    let err = ctx
+        .client
+        .try_create_opportunity(
+            &employer,
+            &student,
+            &hash,
+            &text(&ctx.env, "Paid trial"),
+            &1_000,
+            &25,
+        )
+        .err()
+        .unwrap()
+        .unwrap();
+    assert_eq!(err, Error::InvalidMilestone);
+}
+
+// T12 — Employer can refund after candidate submission to avoid escrow lock.
+#[test]
+fn t12_employer_can_refund_submitted_opportunity() {
+    let ctx = setup();
+    ctx.env.mock_all_auths();
+    ctx.client.init(&ctx.admin, &ctx.token_addr);
+
+    let issuer = Address::generate(&ctx.env);
+    let student = Address::generate(&ctx.env);
+    let employer = Address::generate(&ctx.env);
+    let hash = BytesN::from_array(&ctx.env, &[12u8; 32]);
+
+    register_issuer(&ctx, &issuer);
+    approve_issuer(&ctx, &issuer);
+    register_certificate(&ctx, &issuer, &student, &hash);
+    ctx.client.verify_certificate(&issuer, &hash);
+
+    let opp_id = create_and_fund_opportunity(&ctx, &employer, &student, &hash, 700);
+    ctx.client.submit_milestone(&student, &opp_id);
+    ctx.client.refund_opportunity(&employer, &opp_id);
+
+    let opp = ctx.client.get_opportunity(&opp_id).unwrap();
+    assert_eq!(opp.status, OpportunityStatus::Refunded);
+
+    let employer_balance = token::Client::new(&ctx.env, &ctx.token_addr).balance(&employer);
+    assert_eq!(employer_balance, 700);
+}

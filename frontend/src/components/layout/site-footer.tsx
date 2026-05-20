@@ -65,8 +65,6 @@ export function SiteFooter() {
               <Link href="/about"      className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">About</Link>
               <Link href="/employer"   className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Employer</Link>
               <Link href="/status"     className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Status</Link>
-              <Link href="/opportunity" className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Opportunities</Link>
-              <Link href="/talent"     className="py-1.5 text-text-muted hover:text-text transition-colors no-underline">Talent Passport</Link>
             </nav>
 
             {/* On-chain */}

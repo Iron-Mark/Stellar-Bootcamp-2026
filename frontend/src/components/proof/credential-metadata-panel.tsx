@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import type { ProofMetadata } from "@/lib/types";
+import { isSafeExternalHttpUrl, isSafeInternalHref } from "@/lib/security";
 import { Badge } from "@/components/ui/badge";
 
 interface CredentialMetadataPanelProps {
@@ -8,7 +9,7 @@ interface CredentialMetadataPanelProps {
 }
 
 function isExternalHref(href: string) {
-  return /^https?:\/\//i.test(href);
+  return isSafeExternalHttpUrl(href);
 }
 
 export function CredentialMetadataPanel({
@@ -77,7 +78,7 @@ export function CredentialMetadataPanel({
                 >
                   {item.label} <ExternalLink className="inline w-3 h-3 ml-1" />
                 </a>
-              ) : (
+              ) : isSafeInternalHref(item.href) ? (
                 <Link
                   key={`${item.label}-${item.href}`}
                   href={item.href}
@@ -85,7 +86,7 @@ export function CredentialMetadataPanel({
                 >
                   {item.label} →
                 </Link>
-              ),
+              ) : null,
             )}
           </div>
         </div>

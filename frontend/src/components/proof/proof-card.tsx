@@ -406,7 +406,7 @@ export function ProofCard({
           <p className="font-pixel text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">
             Share
           </p>
-          <ShareButtons hash={hash} />
+          <ShareButtons hash={hash} status={cert?.status ?? null} />
         </section>
 
         {/* Footer */}

@@ -136,7 +136,7 @@ sequenceDiagram
 
 **Design decisions:**
 
-- **soroban-sdk 22** with typed `#[contracterror]` enum (12 variants), persistent + instance storage, TTL 518k/1.04M ledgers
+- **soroban-sdk 22** with typed `#[contracterror]` enum (17 variants), persistent + instance storage, TTL 518k/1.04M ledgers
 - **Issuer trust layer**: self-register → admin approve → issue credentials. Suspended issuers are blocked on-chain
 - **Two read paths**: server-side RSC with `revalidate=60` (CDN-cached proof pages) + client-side `simulateTransaction` (dashboard state)
 - **One write path**: Freighter signs → `sendTransaction` → poll for result
@@ -159,7 +159,7 @@ Full setup guide: [`setup/[ENG] Pre-Workshop Setup Guide.pdf`](setup/%5BENG%5D%2
 
 ```bash
 cd contract
-cargo test                    # 6 tests pass
+cargo test                    # contract test suite
 stellar contract build        # builds wasm32v1-none target
 
 # Deploy to testnet
@@ -237,17 +237,17 @@ Every action in the demo flow is a real transaction on Stellar testnet. Click an
 Issued --> Verified  (issuer or admin calls verify_certificate)
        --> Revoked   (issuer or admin calls revoke_certificate)
        --> Suspended (issuer or admin calls suspend_certificate)
-       --> Expired   (automatically after expires_at ledger sequence)
+       --> Expired   (reserved status; new credentials currently use expires_at = 0 unless a future issuer flow sets expiry)
 ```
 
 ---
 
 ## Tests
 
-6 tests covering the trust layer, access control, revocation, and events:
+Contract tests cover the trust layer, access control, revocation, opportunity escrow, milestone caps, and events:
 
 ```
-running 6 tests
+running 12 tests
 test test::t1_happy_path_with_approved_issuer ... ok
 test test::t2_unapproved_issuer_cannot_issue ... ok
 test test::t3_suspended_issuer_cannot_issue ... ok
@@ -255,7 +255,7 @@ test test::t4_wrong_approved_issuer_cannot_verify ... ok
 test test::t5_revoked_credential_blocks_payment ... ok
 test test::t6_issuer_events_emit ... ok
 
-test result: ok. 6 passed; 0 failed; 0 ignored
+test result: ok. 12 passed; 0 failed; 0 ignored
 ```
 
 | Test | What it verifies |
@@ -266,6 +266,9 @@ test result: ok. 6 passed; 0 failed; 0 ignored
 | t4 | Approved issuer A cannot verify issuer B's credential |
 | t5 | Revoked credential blocks downstream payments |
 | t6 | Events emitted correctly for init, register_issuer, approve_issuer |
+| t7-t10 | Opportunity create, fund, submit, approve, release, refund, and invalid transition behavior |
+| t11 | Opportunity milestone count is capped to prevent unbounded work/rendering |
+| t12 | Employer can refund after candidate submission to avoid escrow lock |
 
 ---
 
@@ -273,33 +276,33 @@ test result: ok. 6 passed; 0 failed; 0 ignored
 
 Full security checklist: [`docs/SECURITY.md`](docs/SECURITY.md)
 
-Covers: smart contract access control, frontend CSP/HSTS/X-Frame-Options, input validation, error normalization, SSRF prevention, and operational security. All items verified for testnet deployment.
+Covers: smart contract access control, frontend CSP/HSTS/X-Frame-Options, strict input validation, JSON-LD escaping, URL sanitization, proof-claim integrity, fee-sponsor restrictions, error normalization, SSRF prevention, and operational security.
 
 ---
 
 ## Advanced Feature: Fee Sponsorship (Gasless Transactions)
 
-Stellaroid Earn implements **fee bump transactions** ([CAP-0015](https://stellar.org/protocol/cap-15)) so that a sponsor account can pay gas fees on behalf of users  - making credential verification and payment linking truly gasless.
+Stellaroid Earn keeps **fee bump transaction** support ([CAP-0015](https://stellar.org/protocol/cap-15)) behind a server-to-server authorization boundary. Public browser clients do not automatically send signed XDR to `/api/fee-bump`.
 
 **How it works:**
 
-1. User signs a transaction normally via Freighter
-2. The signed XDR is sent to `/api/fee-bump` (server-side)
-3. Server wraps it in a `FeeBumpTransaction` signed by the sponsor keypair
-4. The fee-bumped transaction is submitted to the network  - user pays zero fees
+1. A trusted server obtains a user-signed transaction for an allowed Stellaroid Earn method
+2. The trusted server calls `/api/fee-bump` with `Authorization: Bearer <FEE_SPONSOR_TOKEN>`
+3. The route enforces XDR size, signature, operation count, network, contract ID, method allow-list, and fee-ceiling checks
+4. Only then does the sponsor key wrap the transaction as a fee bump
 
 **Implementation:**
 - Server route: [`frontend/src/app/api/fee-bump/route.ts`](frontend/src/app/api/fee-bump/route.ts)
 - Client helper: [`frontend/src/lib/fee-bump.ts`](frontend/src/lib/fee-bump.ts)
-- Config: `FEE_SPONSOR_SECRET` (server-only) + `NEXT_PUBLIC_FEE_SPONSOR_ADDRESS` (UI indicator)
-- Graceful fallback: if sponsor is unavailable, transactions proceed with user-paid fees
+- Config: `FEE_SPONSOR_SECRET` + `FEE_SPONSOR_TOKEN` are server-only. `NEXT_PUBLIC_FEE_SPONSOR_CLIENT_ENABLED` defaults off.
+- Browser fallback: normal user-paid Freighter transactions remain the default path.
 
 ---
 
 ## Metrics & Monitoring
 
 - **Metrics dashboard:** [`/metrics`](https://stellaroid.tech/metrics)  - on-chain stats (events, proofs, transactions, certificates, rewards, payments) refreshed every 30s
-- **Health endpoint:** [`/api/health`](https://stellaroid.tech/api/health)  - JSON health check (config, RPC latency, contract availability)
+- **Health endpoint:** [`/api/health`](https://stellaroid.tech/api/health)  - cached JSON health check (config, RPC latency, contract availability)
 - **Events API:** [`/api/events`](https://stellaroid.tech/api/events)  - structured contract event data for external consumers
 - **Vercel Analytics:** Web analytics integrated via `@vercel/analytics`
 
@@ -330,7 +333,7 @@ stellaroid-earn/
 ├── contract/
 │   ├── src/
 │   │   ├── lib.rs              # Soroban credential + payment contract
-│   │   └── test.rs             # 6 contract tests
+│   │   └── test.rs             # contract security and lifecycle tests
 │   └── Cargo.toml
 ├── frontend/
 │   ├── src/

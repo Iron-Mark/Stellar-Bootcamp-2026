@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useFreighterWallet } from "@/hooks/use-freighter-wallet";
 import { useToast, Button } from "@/components/ui";
+import { appConfig } from "@/lib/config";
+import { DEFAULT_SAMPLE_PROOF_HASH } from "@/lib/demo-data";
 
 export const DEMO_AUTOFILL_EVENT = "demo:autofill";
 
@@ -42,7 +44,7 @@ export function DemoAutofillButton({ registered = false }: DemoAutofillButtonPro
     }
 
     setFilling(true);
-    const certHash = generateCertHash();
+    const certHash = appConfig.e2eMode ? DEFAULT_SAMPLE_PROOF_HASH : generateCertHash();
 
     // Brief delay so the animation feels intentional
     await new Promise<void>((r) => setTimeout(r, 400));

@@ -1,4 +1,5 @@
 import { Networks } from "@stellar/stellar-sdk";
+import { isE2EModeAllowed } from "@/lib/security";
 
 const TESTNET_PASSPHRASE = "Test SDF Network ; September 2015";
 
@@ -10,7 +11,14 @@ export const appConfig = {
     process.env.NEXT_PUBLIC_STELLAR_RPC_URL ?? "https://soroban-testnet.stellar.org",
   network: process.env.NEXT_PUBLIC_STELLAR_NETWORK ?? "TESTNET",
   networkPassphrase: configuredPassphrase,
-  e2eMode: process.env.NEXT_PUBLIC_E2E_MODE === "1",
+  e2eMode:
+    process.env.NEXT_PUBLIC_E2E_MODE === "1" &&
+    isE2EModeAllowed({
+      nodeEnv: process.env.NODE_ENV,
+      ci: process.env.CI === "true",
+      playwright: process.env.NEXT_PUBLIC_PLAYWRIGHT === "1",
+      vercelEnv: process.env.VERCEL_ENV,
+    }),
   contractId: process.env.NEXT_PUBLIC_SOROBAN_CONTRACT_ID ?? "",
   assetAddress: process.env.NEXT_PUBLIC_SOROBAN_ASSET_ADDRESS ?? "",
   assetCode: process.env.NEXT_PUBLIC_SOROBAN_ASSET_CODE ?? "XLM",
@@ -21,6 +29,7 @@ export const appConfig = {
   readAddress: process.env.NEXT_PUBLIC_STELLAR_READ_ADDRESS ?? "",
   adminAddress: process.env.NEXT_PUBLIC_STELLAR_ADMIN_ADDRESS ?? "",
   sponsorAddress: process.env.NEXT_PUBLIC_FEE_SPONSOR_ADDRESS ?? "",
+  feeSponsorClientEnabled: process.env.NEXT_PUBLIC_FEE_SPONSOR_CLIENT_ENABLED === "1",
 };
 
 const networkPassphraseByName: Record<string, string> = {

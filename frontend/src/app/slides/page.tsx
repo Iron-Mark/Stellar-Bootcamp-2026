@@ -434,7 +434,7 @@ export default function SlidesPage() {
                 variant: "amber" as const,
                 stroke: "#f59e0b",
                 title: "Smart Contract",
-                desc: "Soroban SDK 22, Rust, 12 functions, 6 tests, source-verified",
+                desc: "Soroban SDK 22, Rust, trust and escrow tests, source-verified",
                 icon: (
                   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
                 ),
@@ -464,7 +464,7 @@ export default function SlidesPage() {
                 variant: "amber" as const,
                 stroke: "#f59e0b",
                 title: "Fee Sponsorship",
-                desc: "CAP-0015 gasless transactions via server-side fee bump",
+                desc: "CAP-0015 fee bump support restricted to trusted server callers",
                 icon: (
                   <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                 ),

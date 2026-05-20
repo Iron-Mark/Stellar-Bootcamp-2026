@@ -1,3 +1,5 @@
+import { MAX_OPPORTUNITY_MILESTONES } from "@/lib/types";
+
 interface MilestoneStepperProps {
   milestoneCount: number;
   currentMilestone: number;
@@ -9,15 +11,24 @@ export function MilestoneStepper({
   currentMilestone,
   status,
 }: MilestoneStepperProps) {
+  const safeMilestoneCount = Math.min(
+    Math.max(1, Math.trunc(milestoneCount || 1)),
+    MAX_OPPORTUNITY_MILESTONES,
+  );
+  const safeCurrentMilestone = Math.min(
+    Math.max(0, Math.trunc(currentMilestone || 0)),
+    safeMilestoneCount,
+  );
+
   return (
     <div className="flex flex-col gap-2">
       <span className="font-pixel text-xs font-medium text-text-muted uppercase tracking-wider">
         Milestone progress
       </span>
       <div className="flex gap-2 items-center flex-wrap">
-        {Array.from({ length: milestoneCount }, (_, i) => {
-          const done = i < currentMilestone;
-          const current = i === currentMilestone && status !== "released" && status !== "refunded";
+        {Array.from({ length: safeMilestoneCount }, (_, i) => {
+          const done = i < safeCurrentMilestone;
+          const current = i === safeCurrentMilestone && status !== "released" && status !== "refunded";
           return (
             <div
               key={i}
@@ -35,7 +46,7 @@ export function MilestoneStepper({
         })}
       </div>
       <p className="text-xs text-text-muted">
-        {currentMilestone} of {milestoneCount} milestone{milestoneCount > 1 ? "s" : ""} completed
+        {safeCurrentMilestone} of {safeMilestoneCount} milestone{safeMilestoneCount > 1 ? "s" : ""} completed
       </p>
     </div>
   );
