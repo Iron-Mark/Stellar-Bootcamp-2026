@@ -1,7 +1,10 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { DEFAULT_SAMPLE_PROOF_HASH } from "./demo-data.ts";
-import { getProofPreviewTitle } from "./proof-preview.ts";
+import {
+  getCredentialTitleForPreviewState,
+  getProofPreviewTitle,
+} from "./proof-preview.ts";
 
 test("proof preview title prefers real credential title for non-demo hashes", () => {
   const title = getProofPreviewTitle({
@@ -28,5 +31,12 @@ test("proof preview title is neutral when neither chain title nor demo metadata 
       hash: "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
     }),
     "Pending Issuance",
+  );
+});
+
+test("proof preview state clears stale title when a new record title is blank", () => {
+  assert.equal(
+    getCredentialTitleForPreviewState("  ", "Prior Credential Title"),
+    undefined,
   );
 });

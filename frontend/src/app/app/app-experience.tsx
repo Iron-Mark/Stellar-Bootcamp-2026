@@ -21,6 +21,7 @@ import { ExternalLink } from "lucide-react";
 import { useFreighterWallet } from "@/hooks/use-freighter-wallet";
 import { appConfig } from "@/lib/config";
 import { shortenAddress } from "@/lib/format";
+import { getCredentialTitleForPreviewState } from "@/lib/proof-preview";
 import type { CertificateStatus } from "@/lib/types";
 
 interface AppExperienceProps {
@@ -143,7 +144,7 @@ export function AppExperience({ sidebarActivity }: AppExperienceProps) {
                                   ...m,
                                   verified: status === "verified",
                                   credentialStatus: status,
-                                  credentialTitle: record?.title?.trim() || m.credentialTitle,
+                                  credentialTitle: getCredentialTitleForPreviewState(record?.title),
                                   lastHash: hash,
                                   lastStudent: record?.owner ?? m.lastStudent,
                                 }))
@@ -172,7 +173,7 @@ export function AppExperience({ sidebarActivity }: AppExperienceProps) {
                                   ...m,
                                   verified: status === "verified",
                                   credentialStatus: status,
-                                  credentialTitle: record?.title?.trim() || m.credentialTitle,
+                                  credentialTitle: getCredentialTitleForPreviewState(record?.title),
                                   lastHash: hash,
                                   lastStudent: record?.owner ?? m.lastStudent,
                                 }))

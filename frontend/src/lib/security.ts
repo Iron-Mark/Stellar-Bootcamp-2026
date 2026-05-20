@@ -33,7 +33,7 @@ function ipv4FromMappedIpv6(host: string): string | null {
 }
 
 function isPrivateHostname(hostname: string) {
-  const host = hostname.toLowerCase().replace(/^\[|\]$/g, "");
+  const host = hostname.toLowerCase().replace(/^\[|\]$/g, "").replace(/\.+$/g, "");
   const mappedIpv4 = ipv4FromMappedIpv6(host);
   if (mappedIpv4 && isPrivateHostname(mappedIpv4)) return true;
 

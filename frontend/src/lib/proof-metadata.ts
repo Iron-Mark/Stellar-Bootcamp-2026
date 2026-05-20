@@ -1,10 +1,10 @@
-import { DEFAULT_SAMPLE_PROOF_HASH } from "@/lib/demo-data";
-import type { ProofMetadata } from "@/lib/types";
-import type { CertificateRecord } from "@/lib/contract-read-server";
+import { DEFAULT_SAMPLE_PROOF_HASH } from "./demo-data.ts";
+import type { ProofMetadata } from "./types.ts";
+import type { CertificateRecord } from "./contract-read-server.ts";
 import {
   isSafeExternalHttpUrl,
   sanitizeProofMetadata,
-} from "@/lib/security";
+} from "./security.ts";
 
 const PROOF_METADATA: Record<string, ProofMetadata> = {
   [DEFAULT_SAMPLE_PROOF_HASH.toLowerCase()]: {
@@ -43,27 +43,6 @@ export function getProofMetadata(hash: string): ProofMetadata | null {
   return PROOF_METADATA[key] ?? null;
 }
 
-async function fetchMetadataFromUri(uri: string): Promise<ProofMetadata | null> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 3000);
-  try {
-    const res = await fetch(uri, {
-      next: { revalidate: 3600 },
-      signal: controller.signal,
-    });
-    if (!res.ok) return null;
-    const length = Number(res.headers.get("content-length") ?? "0");
-    if (length > 64 * 1024) return null;
-    const text = await res.text();
-    if (text.length > 64 * 1024) return null;
-    return sanitizeProofMetadata(JSON.parse(text));
-  } catch {
-    return null;
-  } finally {
-    clearTimeout(timeout);
-  }
-}
-
 export async function getProofMetadataForCertificate(
   hash: string,
   cert: Pick<CertificateRecord, "title" | "cohort" | "metadataUri"> | null,
@@ -73,13 +52,9 @@ export async function getProofMetadataForCertificate(
   const fallback = getProofMetadata(hash);
   const uri = cert.metadataUri.trim();
 
-  // Prefer live metadata fetched from the on-chain URI.
-  if (uri && isSafeExternalHttpUrl(uri)) {
-    const remote = await fetchMetadataFromUri(uri);
-    if (remote) return remote;
-  }
-
-  // Fall back: merge on-chain fields with the hardcoded demo map.
+  // Keep issuer-supplied metadata URLs as links only. Fetching arbitrary remote
+  // URLs during SSR can become SSRF through redirects, DNS rebinding, or private
+  // network resolution that string-based URL checks cannot fully prove safe.
   const contractEvidence = uri && isSafeExternalHttpUrl(uri) ? [{ label: "Metadata source", href: uri }] : [];
   const title = cert.title.trim() || fallback?.title;
   const description = fallback?.description;
