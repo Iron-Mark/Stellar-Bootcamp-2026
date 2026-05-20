@@ -36,7 +36,7 @@ test("proof preview title is neutral when neither chain title nor demo metadata 
 
 test("proof preview state clears stale title when a new record title is blank", () => {
   assert.equal(
-    getCredentialTitleForPreviewState("  ", "Prior Credential Title"),
+    getCredentialTitleForPreviewState("  "),
     undefined,
   );
 });
