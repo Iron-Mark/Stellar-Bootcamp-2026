@@ -20,7 +20,7 @@
     "clsx": "^2.1.1",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.8.0",
-    "next": "^15.1.0",
+    "next": "^15.5.18",
     "qrcode": "^1.5.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -40,5 +40,8 @@
     "eslint": "^9.39.1",
     "eslint-config-next": "^15.5.15",
     "typescript": "^5.7.0"
+  },
+  "overrides": {
+    "postcss": "8.5.15"
   }
 }
